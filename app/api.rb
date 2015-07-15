@@ -20,7 +20,13 @@ class API
 
 end
 
-var = API.call_api('movie/118340', lambda {|x| x["adult"]})
+movie_parser = lambda do |source|
+	data = Hash.new
+	data.push('backdrop_path',source['backdrop_path'])
+	data.push('budget',source['budget'])
+end
+
+var = API.call_api('movie/118340', movie_parser)
 if var ==nil
 	puts 'nil'
 else
