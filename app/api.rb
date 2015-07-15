@@ -16,9 +16,7 @@ class API
 		response = JSON.parse(resp.body)
 	 	response = parse_func.call(response) if parse_func
 	end
-
-	#validate the response from api
-	#default_validator = lambda do
+	
 end
 
 puts API.prepare_query('movie/118340')
