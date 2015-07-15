@@ -16,7 +16,7 @@ class API
 
 	def self.call_api(params,parse_func = nil)
 		url = prepare_query(params)
-		#puts url
+		puts url
 		resp = Net::HTTP.get_response(URI.parse(url))
 		#puts resp.code
 		begin		
@@ -27,6 +27,10 @@ class API
 	 		return nil
 	 	end
 	end
+
+	@@list_parser = lambda do |source|
+		return source['results']
+	end
 end
 
 movie_parser = lambda do |source|
@@ -36,9 +40,7 @@ movie_parser = lambda do |source|
 end
 
 
-list_parser = lambda do |source|
-	return source['results']
-end
+
 
 #var = API.call_api('genre/878/movies',list_parser)#.each {|x| puts x}
 #puts 'nil' if var == nil
