@@ -9,17 +9,22 @@ class API
 		return @@remote_api_end_point + query + '?api_key=' + @@api_key
 	end
 
-	def self.call_api(url,parse_func = nil)
-		url = append_api_key(url)
+	def self.call_api(params,parse_func = nil)
+		url = prepare_query(params)
 		resp = Net::HTTP.get_response(URI.parse(url))
-		return nil if resp.code != 200.to_s
+		return nil if  resp.code.to_s != 200.to_s
 		response = JSON.parse(resp.body)
 	 	response = parse_func.call(response) if parse_func
+	 	return response
 	end
-	
+
 end
 
-puts API.prepare_query('movie/118340')
-
+var = API.call_api('movie/118340', lambda {|x| x["adult"]})
+if var ==nil
+	puts 'nil'
+else
+	puts var
+end
 #https://api.themoviedb.org/3/movie/118340?api_key=b52469d21a984a24ec19edab6da3439e
 
