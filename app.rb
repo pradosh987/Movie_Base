@@ -2,18 +2,30 @@ require 'sinatra'
 
 set :port, 8081
 set :static, true
-set :public_folder, "static"
+set :public_folder, "public"
 set :views, "views"
 
 get '/' do
-    return 'Hello world'
+    return 'This will be Homepage'
 end
-get '/hello/'	do
-	erb :hello_form
+get '/movie/:id'	do
+	id = params[:id]
+	erb :movie, :locals=>{'id'=> id}
 end
 
-post '/hello/' do
-    greeting = params[:greeting] || "Hi There"
-    name = params[:name] || "budy"
-    erb :index, :locals => {'greeting' => greeting, 'name' => name}
+get '/list/:caller/:id' do
+    caller = params[:greeting]
+    id = params[:name] 
+    erb :list#, :locals => {'greeting' => greeting, 'name' => name}
 end
+
+get '/search/:title' do
+	title = params[:title]
+	erb :search
+end
+
+#post '/list/' do
+#    greeting = params[:greeting] || "Hi There"
+#    name = params[:name] || "budy"
+#    erb :list, :locals => {'greeting' => greeting, 'name' => name}
+#end
