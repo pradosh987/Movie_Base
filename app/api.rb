@@ -19,7 +19,6 @@ class API
 
 	#validate the response from api
 	#default_validator = lambda do
-
 end
 
 puts API.prepare_query('movie/118340')
