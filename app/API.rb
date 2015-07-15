@@ -17,7 +17,6 @@ class API
 	 	response = parse_func.call(response) if parse_func
 	 	return response
 	end
-
 end
 
 movie_parser = lambda do |source|

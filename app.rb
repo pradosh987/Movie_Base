@@ -1,4 +1,5 @@
 require 'sinatra'
+load 'app/API.rb'
 
 set :port, 8081
 set :static, true
@@ -10,7 +11,9 @@ get '/' do
 end
 get '/movie/:id'	do
 	id = params[:id]
-	erb :movie, :locals=>{'id'=> id}
+	var = API.call_api('movie/' + id.to_s)
+	var.inspect
+#	erb :movie, :locals=>{'id'=> id}
 end
 
 get '/list/:caller/:id' do
