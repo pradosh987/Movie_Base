@@ -26,12 +26,15 @@ end
 get '/list/:caller/:id' do
     caller = params[:caller]
     id = params[:id] 
+    title = 'Movie Base'
     if caller=='genre'
         var = API.call_api('genre/'+id+'/movies')
+        title = 'Genre'
     else
         var = API.call_api('company/'+ id +'/movies')
+        title = 'Company'
     end
-    erb :list, :locals => {'data' => var}
+    erb :list, :locals => {'title' => title, 'data' => var}
 end
 
 post '/search/' do
@@ -39,8 +42,9 @@ post '/search/' do
     keyword = 'query=' + CGI::escape(keyword)
     var = API.call_api('search/movie',keyword)
     # var.inspect
-    puts var.inspect
-	erb :list, :locals => {'data' => var} 
+    #puts var.inspect
+    title = CGI::unescap(keyword)
+	erb :list, :locals => {'title' => title, 'data' => var} 
 end
 
 get '/profile/:id' do
@@ -52,6 +56,12 @@ end
 
 #https://api.themoviedb.org/3/person/8691/movie_credits?api_key=b52469d21a984a24ec19edab6da3439e
 #https://api.themoviedb.org/3/person/73457?api_key=b52469d21a984a24ec19edab6da3439e'
+
+get '/now_playing/' do
+    var = API.call_api('movie/now_playing')
+    title = 'Now Playing'
+    erb :list, :locals => {'title' => title, 'data' => var}
+end
 
 #post '/list/' do
 #    greeting = params[:greeting] || "Hi There"
