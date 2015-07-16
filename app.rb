@@ -13,7 +13,8 @@ get '/' do
 end
 get '/movie/:id'	do
 	id = params[:id]
-	var = API.call_api('movie/' + id.to_s)
+    var = "done"
+	#var = API.call_api('movie/' + id.to_s)
 	erb :movie, :locals=>{'id'=> id, 'data'=> var, 'image_host'=>'https://image.tmdb.org/t/p/w185/'}
 end
 
