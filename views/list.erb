@@ -8,14 +8,15 @@
 	<div class="col-md-6" >
 	<% end %>
 
-		<div class="row well">
+		<div class="row well " style="max-height: 300px">
 			<div class="col-md-4">
 				<a href=<%= '"http://localhost:8080/movie/' + item['id'].to_s + '"' %> ><img src=<%= '"https://image.tmdb.org/t/p/w185/' + item['poster_path'] +'"' %> alt=<%='"'+ item['original_title'] + '"'%> title=<%='"' + item['original_title'] + '"'%> class="img-thumbnail img-responsive center-block"  /></a>
 			</div>
 		
 		<div class="col-md-8">
-			<a href=<%= '"http://localhost:8080/movie/' + item['id'].to_s + '"' %>><h2><%= item['original_title'] %></h2></a>
-			<div style="min-height: 70px"></div>
+			<div class="truncate"><a href=<%= '"http://localhost:8080/movie/' + item['id'].to_s + '"' %>><h2><%= item['original_title'] %></h2></a>
+			<p><%= item['overview'] %></p></div>
+			<!--<div style="min-height: 30px"></div> -->
 			<p><a class="btn btn-default pull-right" href=<%= '"http://localhost:8080/movie/' + item['id'].to_s + '"' %> >Read More...</a></p>
 		</div>
 		</div>
