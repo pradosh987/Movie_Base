@@ -18,9 +18,10 @@ get '/movie/:id'	do
 	var = API.call_api('movie/' + id.to_s)
     similar = API.call_api('movie/' + id.to_s + '/similar')
     cast = API.call_api('movie/' + id.to_s + '/credits')
-	erb :movie, :locals=>{'id'=> id, 'data'=> var, 'similar'=> similar, 'cast'=>cast}
+    reviews = API.call_api('movie/' + id.to_s + '/reviews')
+	erb :movie, :locals=>{'id'=> id, 'data'=> var, 'similar'=> similar, 'cast'=>cast, 'reviews' => reviews}
 
-
+    #/movie/{id}/reviews 
     #https://api.themoviedb.org/3/movie/118340/credits?api_key=b52469d21a984a24ec19edab6da3439e
 end
 

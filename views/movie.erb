@@ -27,7 +27,7 @@
 	<div class="row">
 		<h2>Description: </h2>
 		<p><%= data['overview'] %></p>
-
+		<!-- Dispay cast -->
 		<strong>Cast: </strong>
 		<div class="container">
 			<div class="row">
@@ -44,6 +44,19 @@
 	</div>
 	<div class="clearfix" style="margin-top:5px"></div>
 
+	<!-- display reviews -->
+	<div class="row">
+		<hr class="divider">
+		<h2>Reviews: </h2>
+		<% reviews['results'][0..5].each do |review| %>
+			<p><strong> Author:</strong> <%= review['author'] %></p>
+			<p><%= review['content'] %></p>
+			<hr class="divider">
+		<% end %>
+	</div>
+
+
+	<div class="clearfix" style="margin-top:5px"></div>
 	<div class="row">
 	<div class="row" style="margin-top:25px">
 	<h4>Similar movies:</h4>
