@@ -32,7 +32,7 @@
 		<div class="container">
 			<div class="row">
 				<% cast['cast'][0..11].each do |c| %>
-				<a href=<%= '"http://localhost:8080/cast/' + c['id'].to_s + '"' %> >
+				<a href=<%= '"http://localhost:8080/profile/' + c['id'].to_s + '"' %> >
 					<div class="col-xs-1">
 					<img src=<%= '"https://image.tmdb.org/t/p/w92' + c['profile_path'] +'"' %> alt=<%='"'+ c['name'] + '"'%> title=<%='"' + c['name'] + '"'%> class="img-thumbnail img-responsive center-block" />
 						<p><%= c['name'] %></p>

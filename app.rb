@@ -43,10 +43,10 @@ post '/search/' do
 	erb :list, :locals => {'data' => var} 
 end
 
-get '/cast/:id' do
+get '/profile/:id' do
   id = params[:id]
-  cast_info = API.call_api('person/' + id.to_s)
-  erb :cast, :locals => {'data' => cast_info}
+  profile_info = API.call_api('person/' + id.to_s)
+  erb :profile, :locals => {'data' => profile_info}
 end
 
 #https://api.themoviedb.org/3/person/73457?api_key=b52469d21a984a24ec19edab6da3439e'
