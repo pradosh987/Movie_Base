@@ -1,9 +1,30 @@
-
-<div>
-	<p>Title: <%= data['title'] %></p></br>
-	<a>Tagline: <%= data['tagline'] %> </a>
-	<a>Budget: <%= data['budget'] %> </a>
-	</br><a>Description: <%= data['overview'] %></a>
-
+<div class="row">
+	<h1 class="text-center"><%= data['title']%></h1>
 </div>
+<div class="row">
+	<div class="col-lg-6">
+	<img src=<%= '"https://image.tmdb.org/t/p/w780/' + data['backdrop_path'] +'"' %> alt=<%='"'+ data['original_title'] + '"'%> title=<%='"' + data['original_title'] + '"'%> class="img-thumbnail img-responsive center-block" />
+	</div>	
+	<div class="col-lg-6">
+	<p><strong>Tagline:</strong> <%= data['tagline'] %></p>
+	<h2>Description: </h2>
+	<p><%= data['overview'] %></p>
+	<p><strong>Budget:</strong> $<%= data['budget'] %></p>
+	<p><strong>Genres:</strong> <% data['genres'].each do |genre| %> <%= genre['name'] + ' ' %><% end %></p>
+	</div>
+		<div class="clearfix" style="margin-top:5px"></div>
+	<div class="row" style="margin-top:25px">
+	<h4>Similar movies:</h4>
+		<% similar['results'][0..5].each do |sim| %>
+			<a href=<%= '"http://localhost:8080/movie/' + sim['id'].to_s + '"' %>>
+				<div class="col-sm-2" > 
+				<img src=<%= '"https://image.tmdb.org/t/p/w185/' + sim['poster_path'] +'"' %> alt=<%='"'+ sim['original_title'] + '"'%> title=<%='"' + sim['original_title'] + '"'%> class="img-thumbnail img-responsive center-block" />
+				<a><strong><%=sim['original_title'] %></strong></a>
+			 	</div>
+			 </a>
+		<% end %>
+	</div>	
+</div>
+
+
 

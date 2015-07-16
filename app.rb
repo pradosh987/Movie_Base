@@ -14,8 +14,9 @@ end
 get '/movie/:id'	do
 	id = params[:id]
     var = "done"
-	#var = API.call_api('movie/' + id.to_s)
-	erb :movie, :locals=>{'id'=> id, 'data'=> var, 'image_host'=>'https://image.tmdb.org/t/p/w185/'}
+	var = API.call_api('movie/' + id.to_s)
+    similar = API.call_api('movie/' + id.to_s + '/similar')
+	erb :movie, :locals=>{'id'=> id, 'data'=> var, 'similar'=> similar}
 end
 
 get '/list/:caller/:id' do
