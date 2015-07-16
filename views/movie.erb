@@ -1,19 +1,9 @@
-<html>
-	<head>
-		<title> Hello there!</title>
-	</head>
 
-	<body>
-		<h1>Welcome</h1>
-		</br>
-		<%= id %>
+<div>
+	<p>Title: <%= data['title'] %></p></br>
+	<a>Tagline: <%= data['tagline'] %> </a>
+	<a>Budget: <%= data['budget'] %> </a>
+	</br><a>Description: <%= data['overview'] %></a>
 
-		<form action="/hello/" method="post">
-			A Greeting: <input type="text" name="greeting" />
-			</br>
-			Name: <input type="text" name="name" />
-			</br>
-			<input type="submit">
-		</form>
-	</body>
-</html>
+</div>
+

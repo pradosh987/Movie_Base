@@ -1,14 +1,17 @@
-<html>
-    <head>
-        <title>Hello World! </title>
-    </head>
-<body>
+<div class="jumbotron">
+	<h1>Box Office</h1>
+	<div class="row">
+		<% data['results'][0..2].each do |movie| %>
+		<div class="col-lg-4">
+  		<h2><%= movie['original_title']%></h2>
+  		<!-- Image here> -->
+  		<img src="https://image.tmdb.org/t/p/w185/9gm3lL8JMTTmc3W4BmNMCuRLdL8.jpg" alt=<%='"'+ movie['original_title'] + '"'%> title=<%='"'+ movie['original_title'] + '"'%> class="img-thumbnail img-responsive center-block">
+  		<p><a class="btn btn-primary" href="#" role="button">View details &raquo;</a></p>
+		</div>
+		<% end %>
+	</div>
 
-<p>
-I just wanted to say <em style="color: green; font-size: 2em;"><%= greeting %> </em>.
-</br>
-How are you <%= name %>
-</p>
+	<p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+	<p><a class="btn btn-lg btn-success" href="#" role="button">View Info</a></p>
+</div>
 
-</body>
-</html>

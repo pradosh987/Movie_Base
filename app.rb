@@ -1,19 +1,20 @@
 require 'sinatra'
 load 'app/API.rb'
 
-set :port, 8082
+set :port, 8080
 set :static, true
 set :public_folder, "public"
 set :views, "views"
 
 get '/' do
-    return 'This will be Homepage'
+    var = API.call_api('movie/now_playing')
+    #erb :404 if var==nil
+    erb :index, :locals => {'data' => var}
 end
 get '/movie/:id'	do
 	id = params[:id]
 	var = API.call_api('movie/' + id.to_s)
-	var.inspect
-#	erb :movie, :locals=>{'id'=> id}
+	erb :movie, :locals=>{'id'=> id, 'data'=> var}
 end
 
 get '/list/:caller/:id' do
