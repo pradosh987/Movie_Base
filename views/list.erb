@@ -1,14 +1,23 @@
-<html>
-    <head>
-        <title>Hello World! </title>
-    </head>
-<body>
+<div class="row">
+<% count = 0 %>
+<% data['results'][0..9].each do |item| %>
+	<% if count % 5==0 %>
+	<div class="col-md-6">
+	<% end %>
 
-<p>
-I just wanted to say <em style="color: green; font-size: 2em;"><%= greeting %> </em>.
-</br>
-How are you <%= name %>
-</p>
-
-</body>
-</html>
+		<div class="row">
+			<div class="col-md-4">
+				<a href=<%= '"http://localhost:8080/movie/' + item['id'].to_s + '"' %> ><img src=<%= '"https://image.tmdb.org/t/p/w185/' + item['poster_path'] +'"' %> alt=<%='"'+ item['original_title'] + '"'%> title=<%='"' + item['original_title'] + '"'%> class="img-thumbnail img-responsive center-block"  /></a>
+			</div>
+		
+		<div class="col-md-8">
+			<h2><%= item['original_title'] %></h2>
+			<p><%= item['overview'].to_s %></p>
+		</div>
+		</div>
+	<% if (count%5)==4 %>
+	</div>
+	<% end %>
+	<% count +=1 %>
+<% end %>
+</div>	

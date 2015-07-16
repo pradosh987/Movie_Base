@@ -22,12 +22,12 @@ end
 get '/list/:caller/:id' do
     caller = params[:caller]
     id = params[:id] 
-    if caller=='genre'
-    	API.call_api('genre/'+id+'/movies',lambda {|source| source['results']}).to_s
-    else
-    	caller
-    end
-#    erb :list#, :locals => {'greeting' => greeting, 'name' => name}
+    #if caller=='genre'
+    var = API.call_api('genre/'+id+'/movies')
+    #else
+    #	caller
+    #end
+    erb :list, :locals => {'data' => var}
 end
 
 get '/search/:title' do
