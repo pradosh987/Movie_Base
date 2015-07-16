@@ -10,7 +10,7 @@
 	<h2>Description: </h2>
 	<p><%= data['overview'] %></p>
 	<p><strong>Budget:</strong> $<%= data['budget'] %></p>
-	<p><strong>Genres:</strong> <% data['genres'].each do |genre| %> <%= genre['name'] + ' ' %><% end %></p>
+	<p><strong>Genres:</strong> <% data['genres'].each do |genre| %><a href=<%= '"http://localhost:8080/list/genre/' + genre['id'].to_s + '"' %> ><%= genre['name'] %>  </a><% end %></p>
 	</div>
 		<div class="clearfix" style="margin-top:5px"></div>
 	<div class="row" style="margin-top:25px">
