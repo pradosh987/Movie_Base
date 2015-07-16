@@ -2,17 +2,18 @@
 <% count = 0 %>
 <% data['results'][0..9].each do |item| %>
 	<% if count % 5==0 %>
-	<div class="col-md-6">
+	<div class="col-md-6" >
 	<% end %>
 
-		<div class="row">
+		<div class="row well">
 			<div class="col-md-4">
 				<a href=<%= '"http://localhost:8080/movie/' + item['id'].to_s + '"' %> ><img src=<%= '"https://image.tmdb.org/t/p/w185/' + item['poster_path'] +'"' %> alt=<%='"'+ item['original_title'] + '"'%> title=<%='"' + item['original_title'] + '"'%> class="img-thumbnail img-responsive center-block"  /></a>
 			</div>
 		
 		<div class="col-md-8">
 			<h2><%= item['original_title'] %></h2>
-			<p><%= item['overview'].to_s %></p>
+			<div style="min-height: 70px"></div>
+			<p><a class="btn btn-default pull-right" href=<%= '"http://localhost:8080/movie/' + item['id'].to_s + '"' %> >Read More...</a></p>
 		</div>
 		</div>
 	<% if (count%5)==4 %>
