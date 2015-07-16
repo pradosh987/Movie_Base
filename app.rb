@@ -46,9 +46,11 @@ end
 get '/profile/:id' do
   id = params[:id]
   profile_info = API.call_api('person/' + id.to_s)
-  erb :profile, :locals => {'data' => profile_info}
+  starred_in = API.call_api('person/' + id.to_s + '/movie_credits')
+  erb :profile, :locals => {'data' => profile_info, 'starred_in' => starred_in}
 end
 
+#https://api.themoviedb.org/3/person/8691/movie_credits?api_key=b52469d21a984a24ec19edab6da3439e
 #https://api.themoviedb.org/3/person/73457?api_key=b52469d21a984a24ec19edab6da3439e'
 
 #post '/list/' do

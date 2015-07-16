@@ -22,9 +22,23 @@
 		<h2><strong>Biography:</strong></h2>
 		<p><%= data['biography'] %></p>
 		<h3>Starred in: </h3>
+		<% count = 0 %>
+		<% starred_in['cast'][0..17].each do |movie| %>
+			<% if  count%6 ==0%>
+				<div class="row">
+			<% end %>
+					<a href=<%= '"http://localhost:8080/movie/' + movie['id'].to_s + '"' %> >
+						<div class="col-sm-2" > 
+							<img src=<%= '"https://image.tmdb.org/t/p/w185' + movie['poster_path'] +'"' %> alt=<%='"'+ movie['original_title'] + '"'%> title=<%='"' + movie['original_title'] + '"'%> class="img-thumbnail img-responsive center-block" />
+							<p class="text-center"><strong><%=movie['original_title'] %></strong></p>
+			 		</div>
+			 		</a>
 
-		
-
+			<% if count%6==5 %>
+				</div>
+			<% end %>
+			<% count+=1 %>
+		<% end %>
 	</div>
 
 
