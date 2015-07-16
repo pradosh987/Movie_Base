@@ -30,9 +30,13 @@ get '/list/:caller/:id' do
     erb :list, :locals => {'data' => var}
 end
 
-get '/search/:title' do
-	title = params[:title]
-	erb :search
+post '/search/' do
+	keyword = params[:keyword]
+    keyword = 'query=' + CGI::escape(keyword)
+    var = API.call_api('search/movie',keyword)
+    # var.inspect
+    puts var.inspect
+	erb :list, :locals => {'data' => var} 
 end
 
 #post '/list/' do
