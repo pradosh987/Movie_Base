@@ -1,17 +1,31 @@
 <div class="jumbotron">
-	<h1>Box Office</h1>
 	<div class="row">
-		<% data['results'][0..2].each do |movie| %>
-		<div class="col-lg-4">
-  		<h2><%= movie['original_title']%></h2>
+	<h2>Now Playing In Threaters</h2>
+	<div class="row">
+		<% now['results'][0..3].each do |movie| %>
+		<div class="col-lg-6">
+  		<h3><%= movie['original_title']%></h3>
   		<!-- Image here> -->
-  		<img src=<%= '"' + image_host + movie['poster_path'] +'"' %> alt=<%='"'+ movie['original_title'] + '"'%> title=<%='"' + movie['original_title'] + '"'%> class="img-thumbnail img-responsive center-block">
-  		<p><a class="btn btn-primary" href="#" role="button">View details &raquo;</a></p>
+  		<a href=<%= '"http://localhost:8080/movie/' + movie['id'].to_s + '"' %> >
+  		<img src=<%= '"https://image.tmdb.org/t/p/w500_and_h281_bestv2' + movie['backdrop_path'] +'"' %> alt=<%='"'+ movie['original_title'] + '"'%> title=<%='"' + movie['original_title'] + '"'%> class="img-thumbnail img-responsive center-block">
+  		</a>
 		</div>
 		<% end %>
 	</div>
-
-	<p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-	<p><a class="btn btn-lg btn-success" href="#" role="button">View Info</a></p>
+	</div>
+	<div class="row">
+	<h2>Releasing Soon</h2>
+		<div class="row">
+			<% upcoming['results'][0..3].each do |movie| %>
+			<div class="col-lg-6">
+  			<h3><%= movie['original_title']%></h3>
+  			<!-- Image here> -->
+  			<a href=<%= '"http://localhost:8080/movie/' + movie['id'].to_s + '"' %> >
+  			<img src=<%= '"https://image.tmdb.org/t/p/w500_and_h281_bestv2' + movie['backdrop_path'] +'"' %> alt=<%='"'+ movie['original_title'] + '"'%> title=<%='"' + movie['original_title'] + '"'%> class="img-thumbnail img-responsive center-block">
+  			</a>
+			</div>
+		<% end %>
+	</div>
+	</div>
 </div>
 

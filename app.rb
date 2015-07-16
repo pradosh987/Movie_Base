@@ -7,9 +7,10 @@ set :public_folder, "public"
 set :views, "views"
 
 get '/' do
-    var = API.call_api('movie/now_playing')
+    now = API.call_api('movie/now_playing')
+    upcoming = API.call_api('movie/upcoming')
     #erb :404 if var==nil
-    erb :index, :locals => {'data' => var, 'image_host'=>'https://image.tmdb.org/t/p/w185/'}
+    erb :index, :locals => {'now' => now, 'upcoming'=> upcoming, 'image_host'=>'https://image.tmdb.org/t/p/w185/'}
 end
 get '/movie/:id'	do
 	id = params[:id]
