@@ -11,7 +11,7 @@
 			</div>
 		
 		<div class="col-md-8">
-			<h2><%= item['original_title'] %></h2>
+			<a href=<%= '"http://localhost:8080/movie/' + item['id'].to_s + '"' %>><h2><%= item['original_title'] %></h2></a>
 			<div style="min-height: 70px"></div>
 			<p><a class="btn btn-default pull-right" href=<%= '"http://localhost:8080/movie/' + item['id'].to_s + '"' %> >Read More...</a></p>
 		</div>
