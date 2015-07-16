@@ -1,0 +1,30 @@
+<div class="row">
+	<h1 class="text-center"><%= data['name']%></h1>
+</div>
+<div class="row">
+	<div class="col-lg-6">
+		<img src=<%= '"https://image.tmdb.org/t/p/w780' + data['profile_path'] +'"' %> alt=<%='"'+ data['name'] + '"'%> title=<%='"' + data['name'] + '"'%> class="img-thumbnail img-responsive center-block" />
+	</div>	
+	<div class="col-lg-6">
+		<p><strong>Name: </strong> <%= data['name'] %></p>
+
+		<p><strong>Birthday: </strong> <%= data['birthday"'] %></p>
+		
+		<p><strong>Place of birth:</strong> <%= data['place_of_birth"'] %></p>
+
+		<p><strong>Biography:</strong> $<%= data['biography'] %></p>
+
+	</div>
+</div>
+
+	<div class="clearfix" style="margin-top:5px"></div>
+	
+	<div class="row">
+		<h2>Starred in: </h2>
+
+		
+
+	</div>
+
+
+
