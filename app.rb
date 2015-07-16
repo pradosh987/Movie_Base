@@ -63,6 +63,16 @@ get '/now_playing/' do
     erb :list, :locals => {'title' => title, 'data' => var}
 end
 
+get '/popular/' do
+    var = API.call_api('movie/popular')
+    erb:list, :locals => {'title' => 'Popular Movies', 'data' => var}
+end
+
+get '/upcoming/' do
+    var = API.call_api('movie/upcoming')
+    erb:list, :locals => {'title' => 'Upcoming Movies', 'data' => var}
+end
+
 #post '/list/' do
 #    greeting = params[:greeting] || "Hi There"
 #    name = params[:name] || "budy"
