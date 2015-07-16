@@ -6,6 +6,7 @@ require 'json'
 class API
 	@@remote_api_end_point = 'https://api.themoviedb.org/3/'
 	@@api_key = 'b52469d21a984a24ec19edab6da3439e'
+	@@image_host ='https://image.tmdb.org/t/p/w185/'
 
 	@@movie_info = 'movie/'
 	@@genre = lambda {|id| 'genre/' + id + '/movies'}
@@ -27,6 +28,12 @@ class API
 	 		return nil
 	 	end
 	end
+
+	#def self.image_url_builder()
+	#	return lambda {|x| @@image_host + x }
+	#end
+
+
 
 	@@list_parser = lambda do |source|
 		return source['results']

@@ -9,12 +9,12 @@ set :views, "views"
 get '/' do
     var = API.call_api('movie/now_playing')
     #erb :404 if var==nil
-    erb :index, :locals => {'data' => var}
+    erb :index, :locals => {'data' => var, 'image_host'=>'https://image.tmdb.org/t/p/w185/'}
 end
 get '/movie/:id'	do
 	id = params[:id]
 	var = API.call_api('movie/' + id.to_s)
-	erb :movie, :locals=>{'id'=> id, 'data'=> var}
+	erb :movie, :locals=>{'id'=> id, 'data'=> var, 'image_host'=>'https://image.tmdb.org/t/p/w185/'}
 end
 
 get '/list/:caller/:id' do
