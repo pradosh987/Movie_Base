@@ -22,7 +22,7 @@
 			<a href=<%= '"http://localhost:8080/movie/' + sim['id'].to_s + '"' %> >
 				<div class="col-sm-2" > 
 				<img src=<%= '"https://image.tmdb.org/t/p/w185/' + sim['poster_path'] +'"' %> alt=<%='"'+ sim['original_title'] + '"'%> title=<%='"' + sim['original_title'] + '"'%> class="img-thumbnail img-responsive center-block" />
-				<a><strong><%=sim['original_title'] %></strong></a>
+				<p class="text-center"><strong><%=sim['original_title'] %></strong></p>
 			 	</div>
 			 </a>
 		<% end %>
