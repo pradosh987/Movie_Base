@@ -11,8 +11,8 @@ class API
 	@@movie_info = 'movie/'
 	@@genre = lambda {|id| 'genre/' + id + '/movies'}
 
-	def self.prepare_query(query)
-		return @@remote_api_end_point + query + '?api_key=' + @@api_key
+	def self.prepare_query(query,append= '')
+		return @@remote_api_end_point + query + '?api_key=' + @@api_key+ '&' + append
 	end
 
 	def self.call_api(params,parse_func = nil)
