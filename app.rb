@@ -22,11 +22,11 @@ end
 get '/list/:caller/:id' do
     caller = params[:caller]
     id = params[:id] 
-    #if caller=='genre'
-    var = API.call_api('genre/'+id+'/movies')
-    #else
-    #	caller
-    #end
+    if caller=='genre'
+        var = API.call_api('genre/'+id+'/movies')
+    else
+        var = API.call_api('company/'+ id +'/movies')
+    end
     erb :list, :locals => {'data' => var}
 end
 
