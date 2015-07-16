@@ -3,25 +3,52 @@
 </div>
 <div class="row">
 	<div class="col-lg-6">
-	<img src=<%= '"https://image.tmdb.org/t/p/w780/' + data['backdrop_path'] +'"' %> alt=<%='"'+ data['original_title'] + '"'%> title=<%='"' + data['original_title'] + '"'%> class="img-thumbnail img-responsive center-block" />
+		<img src=<%= '"https://image.tmdb.org/t/p/w780' + data['backdrop_path'] +'"' %> alt=<%='"'+ data['original_title'] + '"'%> title=<%='"' + data['original_title'] + '"'%> class="img-thumbnail img-responsive center-block" />
 	</div>	
 	<div class="col-lg-6">
-	<p><strong>Tagline:</strong> <%= data['tagline'] %></p>
-	<h2>Description: </h2>
-	<p><%= data['overview'] %></p>
-	<p><strong>Budget:</strong> $<%= data['budget'] %></p>
+		<p><strong>Tagline:</strong> <%= data['tagline'] %></p>
 
-	<p><strong>Genres:</strong> <% data['genres'].each do |genre| %><a href=<%= '"http://localhost:8080/list/genre/' + genre['id'].to_s + '"' %> ><%= genre['name']+'.' %>  </a><% end %></p>
+		<p><strong>Release date:</strong> <%= data['release_date"'] %></p>
+		
+		<p><strong>Avg. Ratings:</strong> <%= data['vote_average"'] %></p>
 
-	<p><strong>Production Companies: </strong> <% data['production_companies'].each do |companies| %><a href=<%= '"http://localhost:8080/list/company/' + companies['id'].to_s + '"' %> ><%= companies['name']+'.' %>  </a><% end %></p>
+		<p><strong>Budget:</strong> $<%= data['budget'] %></p>
+
+		<p><strong>Homepage: </strong><a href=<%='"' + data['homepage'] + '"' %> target="_blank" rel="nofollow"><%= data['homepage'] %></a></p>
+
+		<p><strong>Genres: </strong> <% data['genres'].each do |genre| %><a href=<%= '"http://localhost:8080/list/genre/' + genre['id'].to_s + '"' %> ><%= genre['name']+'.' %>  </a><% end %></p>
+
+		<p><strong>Production Companies: </strong> <% data['production_companies'].each do |companies| %><a href=<%= '"http://localhost:8080/list/company/' + companies['id'].to_s + '"' %> ><%= companies['name']+'.' %>  </a><% end %></p>
 	</div>
-		<div class="clearfix" style="margin-top:5px"></div>
+	</div>
+
+	<div class="clearfix" style="margin-top:5px"></div>
+	
+	<div class="row">
+		<h2>Description: </h2>
+		<p><%= data['overview'] %></p>
+
+		<strong>Cast: </strong>
+		<div class="container">
+			<div class="row">
+				<% cast['cast'][0..11].each do |c| %>
+					<div class="col-xs-1">
+					<img src=<%= '"https://image.tmdb.org/t/p/w92' + c['profile_path'] +'"' %> alt=<%='"'+ c['name'] + '"'%> title=<%='"' + c['name'] + '"'%> class="img-thumbnail img-responsive center-block" />
+						<p><%= c['name'] %></p>
+					</div>
+				<% end %>
+			</div>
+		</div>
+	</div>
+	<div class="clearfix" style="margin-top:5px"></div>
+
+	<div class="row">
 	<div class="row" style="margin-top:25px">
 	<h4>Similar movies:</h4>
 		<% similar['results'][0..5].each do |sim| %>
 			<a href=<%= '"http://localhost:8080/movie/' + sim['id'].to_s + '"' %> >
 				<div class="col-sm-2" > 
-				<img src=<%= '"https://image.tmdb.org/t/p/w185/' + sim['poster_path'] +'"' %> alt=<%='"'+ sim['original_title'] + '"'%> title=<%='"' + sim['original_title'] + '"'%> class="img-thumbnail img-responsive center-block" />
+				<img src=<%= '"https://image.tmdb.org/t/p/w185' + sim['poster_path'] +'"' %> alt=<%='"'+ sim['original_title'] + '"'%> title=<%='"' + sim['original_title'] + '"'%> class="img-thumbnail img-responsive center-block" />
 				<p class="text-center"><strong><%=sim['original_title'] %></strong></p>
 			 	</div>
 			 </a>

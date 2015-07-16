@@ -16,7 +16,11 @@ get '/movie/:id'	do
     var = "done"
 	var = API.call_api('movie/' + id.to_s)
     similar = API.call_api('movie/' + id.to_s + '/similar')
-	erb :movie, :locals=>{'id'=> id, 'data'=> var, 'similar'=> similar}
+    cast = API.call_api('movie/' + id.to_s + '/credits')
+	erb :movie, :locals=>{'id'=> id, 'data'=> var, 'similar'=> similar, 'cast'=>cast}
+
+
+    #https://api.themoviedb.org/3/movie/118340/credits?api_key=b52469d21a984a24ec19edab6da3439e
 end
 
 get '/list/:caller/:id' do
