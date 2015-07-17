@@ -1,6 +1,6 @@
 class Profile
 
-attr_accessor :name, :id, :place_of_birth, :profie_picture, :birthday, :deathday, :homepage, :biography, :imdb_id 
+  attr_accessor :name, :id, :place_of_birth, :profie_picture, :birthday, :deathday, :homepage, :biography, :imdb_id, :starred_in
 
   #initialize profile. Name and id is mendatory
   def initialize(name, id, opts={})
@@ -10,5 +10,7 @@ attr_accessor :name, :id, :place_of_birth, :profie_picture, :birthday, :deathday
       self.send("#{k}=",v) if self.respond_to?("#{k}=")
     end 
   end
+
+
 
 end
