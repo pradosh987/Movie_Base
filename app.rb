@@ -1,6 +1,7 @@
 require 'sinatra'
 
 load 'app/Remote_Api.rb'
+load 'app/classes/Nav_Page.rb'
 load 'app/API.rb'
 
 set :port, 8080
@@ -9,8 +10,8 @@ set :public_folder, "public"
 set :views, "views"
 
 get '/' do
-  now = Remote_Api.get_now_playing_movies()
-  upcoming = Remote_Api.get_upcoming_movies()
+  now = Remote_Api.get_now_playing_movies(true)
+  upcoming = Remote_Api.get_upcoming_movies(true)
   erb :index, :locals => {'now' => now, 'upcoming'=> upcoming, 'image_host'=>'https://image.tmdb.org/t/p/w185/'}
 end
 
@@ -34,7 +35,7 @@ get '/list/:caller/:id' do
     var = Remote_Api.get_movies_by_company(id)
     title = 'Company'
   end
-  erb :list, :locals => {'title' => title, 'data' => var}
+  erb :list_old, :locals => {'title' => title, 'data' => var}
 end
 
 get '/list/:caller/:id/:page' do
@@ -49,7 +50,7 @@ get '/list/:caller/:id/:page' do
     var = Remote_Api.get_movies_by_company(id)
     title = 'Company'
   end
-  erb :list, :locals => {'title' => title, 'data' => var}
+  erb :list_old, :locals => {'title' => title, 'data' => var}
 end
 
 post '/search/' do
@@ -57,7 +58,7 @@ post '/search/' do
   keyword = CGI::escape(keyword)
   var = Remote_Api.search(keyword)
   title = 'Search - ' + params[:keyword]
-  erb :list, :locals => {'title' => title, 'data' => var} 
+  erb :list, :locals => {'title' => title, 'page' => var} 
 end
 
 get '/profile/:id' do
@@ -70,15 +71,24 @@ end
 get '/now_playing/' do
   var = Remote_Api.get_now_playing_movies
   title = 'Now Playing'
-  erb :list, :locals => {'title' => title, 'data' => var}
+  erb :list, :locals => {'title' => title, 'page' => var}
 end
 
 get '/popular/' do
   var = Remote_Api.get_popular_movies
-  erb:list, :locals => {'title' => 'Popular Movies', 'data' => var}
+  erb :list, :locals => {'title' => 'Popular Movies', 'page' => var}
 end
 
 get '/upcoming/' do
   var = Remote_Api.get_upcoming_movies
-  erb:list, :locals => {'title' => 'Upcoming Movies', 'data' => var}
+  erb :list, :locals => {'title' => 'Upcoming Movies', 'page' => var}
+end
+
+#test code block
+get '/test/' do
+  var = Remote_Api.get_upcoming_movies
+  erb :list, :locals => {'title' => 'Upcoming Movies', 'page' => var} 
+  #puts 'here:' + var.page.to_s
+  # var.data.each {|x| puts x.name}
+  # "HEllo"
 end
