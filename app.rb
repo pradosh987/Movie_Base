@@ -2,7 +2,6 @@ require 'sinatra'
 
 load 'app/Remote_Api.rb'
 load 'app/classes/Nav_Page.rb'
-load 'app/API.rb'
 
 set :port, 8080
 set :static, true
@@ -35,7 +34,7 @@ get '/list/:caller/:id' do
     var = Remote_Api.get_movies_by_company(id)
     title = 'Company'
   end
-  erb :list_old, :locals => {'title' => title, 'data' => var}
+  erb :list, :locals => {'title' => title, 'page' => var}
 end
 
 get '/list/:caller/:id/:page' do

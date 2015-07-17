@@ -101,12 +101,18 @@ class Remote_Api
 		call_api('movie/' + id.to_s + '/reviews')
 	end
 
-	def self.get_movies_by_genre(id)
-		call_api('genre/'+id+'/movies')
+	def self.get_movies_by_genre(id, list = false)
+		raw_data = call_api('genre/'+id+'/movies')
+		return raw_data if list==true
+			movies = make_movie_list(raw_data)
+		return Nav_Page.new(movies,raw_data['page'],raw_data['total_pages'])
 	end
 
-	def self.get_movies_by_company(id)
-		call_api('company/'+ id +'/movies')
+	def self.get_movies_by_company(id, list = false)
+		raw_data =  call_api('company/'+ id +'/movies')
+		return raw_data if list==true
+			movies = make_movie_list(raw_data)
+		return Nav_Page.new(movies,raw_data['page'],raw_data['total_pages'])
 	end
 
 	def self.get_movies_starred_by(id)
