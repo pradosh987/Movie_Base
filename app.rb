@@ -6,6 +6,7 @@ set :static, true
 set :public_folder, "public"
 set :views, "views"
 
+# REVIEW -- intendation practice; 2 spaces; indent with spaces
 get '/' do
     now = API.call_api('movie/now_playing')
     upcoming = API.call_api('movie/upcoming')
