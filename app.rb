@@ -25,16 +25,30 @@ get '/movie/:id'	do
     #https://api.themoviedb.org/3/movie/118340/credits?api_key=b52469d21a984a24ec19edab6da3439e
 end
 
-get '/list/:caller/:id/:page' do
+get '/list/:caller/:id' do
     caller = params[:caller]
     id = params[:id] 
-    page = params[:page] || 1
     title = 'Movie Base'
     if caller=='genre'
         var = API.call_api('genre/'+id+'/movies')
         title = 'Genre'
     else
         var = API.call_api('company/'+ id +'/movies')
+        title = 'Company'
+    end
+    erb :list, :locals => {'title' => title, 'data' => var}
+end
+
+get '/list/:caller/:id/:page' do
+    caller = params[:caller]
+    id = params[:id] 
+    page = params[:page] || 1
+    title = 'Movie Base'
+    if caller=='genre'
+        var = API.call_api('genre/'+id+'/movies','page='+page)
+        title = 'Genre'
+    else
+        var = API.call_api('company/'+ id +'/movies','page='+page)
         title = 'Company'
     end
     erb :list, :locals => {'title' => title, 'data' => var}
