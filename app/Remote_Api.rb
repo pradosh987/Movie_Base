@@ -42,12 +42,35 @@ class Remote_Api
 		raw_data['results'].each do |movie|
 			name = movie['original_title']
 			id = movie['id']
-			poster = 'https://image.tmdb.org/t/p/w185' + movie['poster_path'] if movie['poster_path']
+			poster = get_image_url('small', movie['poster_path'])
+			puts poster
+#			poster = 'https://image.tmdb.org/t/p/w185' + movie['poster_path'] if movie['poster_path']
 			overview = movie['overview']
 			m = Movie.new(name, id, {'poster' => poster, 'overview' => overview})
 			movies.push(m)
 		end
 		return Nav_Page.new(movies,raw_data['page'],raw_data['total_pages'])
+	end
+
+	def self.get_image_url(type, image)
+
+		case type
+		when 'small'
+			return 'https://image.tmdb.org/t/p/w185' + image
+		when 'medium'
+			return 'https://image.tmdb.org/t/p/w185' + image
+		when 'large'
+			return 'https://image.tmdb.org/t/p/w185' + image
+		when 'small-wide'
+			return 'https://image.tmdb.org/t/p/w185' + image
+		when 'medium-wide'
+			return 'https://image.tmdb.org/t/p/w185' + image
+		when 'large-wide'
+			return 'https://image.tmdb.org/t/p/w185' + image
+		else
+			return 'https://d3a8mw37cqal2z.cloudfront.net/assets/f996aa2014d2ffddfda8463c479898a3/images/no-poster-w185.jpg'
+		end
+
 	end
 	
 	def self.get_upcoming_movies()
