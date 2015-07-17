@@ -45,7 +45,7 @@ post '/search/' do
     var = API.call_api('search/movie',keyword)
     # var.inspect
     #puts var.inspect
-    title = CGI::unescap(keyword)
+    title = 'Search - ' + params[:keyword]
 	erb :list, :locals => {'title' => title, 'data' => var} 
 end
 
