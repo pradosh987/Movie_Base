@@ -3,6 +3,7 @@ require 'json'
 load 'app/classes/Profile.rb'
 load 'app/classes/Movie.rb'
 load 'app/classes/Review.rb'
+load 'app/classes/Nav_Page.rb'
 
 
 class Remote_Api
@@ -31,6 +32,22 @@ class Remote_Api
 	#Remote API endpoint methods
 	def self.get_now_playing_movies()
 		call_api('movie/now_playing')
+	end
+
+	def self.get_now_playing_movies_new()
+		raw_data = call_api('movie/now_playing')
+
+		movies = Array.new 
+
+		raw_data['results'].each do |movie|
+			name = movie['original_title']
+			id = movie['id']
+			poster = 'https://image.tmdb.org/t/p/w185' + movie['poster_path'] if movie['poster_path']
+			overview = movie['overview']
+			m = Movie.new(name, id, {'poster' => poster, 'overview' => overview})
+			movies.push(m)
+		end
+		return Nav_Page.new(movies,raw_data['page'],raw_data['total_pages'])
 	end
 	
 	def self.get_upcoming_movies()
