@@ -19,6 +19,12 @@ class API
 		return @@remote_api_end_point + query + '?api_key=' + @@api_key+ '&' + append
 	end
 
+	# REVIEW -- functions like this should be how your domain API is exposed to
+	# your controller
+	def self.fetch_movie(movie_id)
+		call_api('movie/' + movie_id.to_s)
+	end
+
 	def self.call_api(params,apped_param ='', parse_func = nil)
 		url = prepare_query(params,apped_param)
 		#puts url
