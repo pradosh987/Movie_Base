@@ -17,7 +17,7 @@ class API
 
 	def self.call_api(params,apped_param ='', parse_func = nil)
 		url = prepare_query(params,apped_param)
-		puts url
+		#puts url
 		resp = Net::HTTP.get_response(URI.parse(url))
 		#puts resp.code
 		begin		

@@ -25,9 +25,10 @@ get '/movie/:id'	do
     #https://api.themoviedb.org/3/movie/118340/credits?api_key=b52469d21a984a24ec19edab6da3439e
 end
 
-get '/list/:caller/:id' do
+get '/list/:caller/:id/:page' do
     caller = params[:caller]
     id = params[:id] 
+    page = params[:page] || 1
     title = 'Movie Base'
     if caller=='genre'
         var = API.call_api('genre/'+id+'/movies')
