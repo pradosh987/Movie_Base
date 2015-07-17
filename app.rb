@@ -16,11 +16,11 @@ end
 
 get '/movie/:id'	do
 	id = params[:id]
-  var = Remote_Api.get_movie_details(id)
-  similar = Remote_Api.get_similar_movies(id)
-  cast = Remote_Api.get_cast_from_movie(id)
-  reviews = Remote_Api.get_reviews_of_movie(id)
-  erb :movie, :locals=>{'id'=> id, 'data'=> var, 'similar'=> similar, 'cast'=>cast, 'reviews' => reviews} 
+  var = Remote_Api.get_movie_details(id,true)
+  #similar = Remote_Api.get_similar_movies(id)
+  #cast = Remote_Api.get_cast_from_movie(id)
+  #reviews = Remote_Api.get_reviews_of_movie(id)
+  erb :movie_new, :locals=>{'id'=> id, 'data'=> var} 
 end
 
 get '/list/:caller/:id' do
@@ -37,20 +37,20 @@ get '/list/:caller/:id' do
   erb :list, :locals => {'title' => title, 'page' => var}
 end
 
-get '/list/:caller/:id/:page' do
-  caller = params[:caller]
-  id = params[:id] 
-  page = params[:page] || 1
-  title = 'Movie Base'
-  if caller=='genre'
-    var = Remote_Api.get_movies_by_genre(id)
-    title = 'Genre'
-  else
-    var = Remote_Api.get_movies_by_company(id)
-    title = 'Company'
-  end
-  erb :list_old, :locals => {'title' => title, 'data' => var}
-end
+# get '/list/:caller/:id/:page' do
+#   caller = params[:caller]
+#   id = params[:id] 
+#   page = params[:page] || 1
+#   title = 'Movie Base'
+#   if caller=='genre'
+#     var = Remote_Api.get_movies_by_genre(id)
+#     title = 'Genre'
+#   else
+#     var = Remote_Api.get_movies_by_company(id)
+#     title = 'Company'
+#   end
+#   erb :list_old, :locals => {'title' => title, 'data' => var}
+# end
 
 post '/search/' do
   keyword = params[:keyword]

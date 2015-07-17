@@ -30,12 +30,14 @@ class Remote_Api
 
 	def self.get_image_url(type, image)
 		case type
+		when 'x-small'
+			return 'https://image.tmdb.org/t/p/w92' + image.to_s
 		when 'small'
 			return 'https://image.tmdb.org/t/p/w185' + image.to_s
 		when 'medium'
 			return 'https://image.tmdb.org/t/p/w185' + image.to_s
 		when 'large'
-			return 'https://image.tmdb.org/t/p/w185' + image.to_s
+			return 'https://image.tmdb.org/t/p/w780' + image.to_s
 		when 'small-wide'
 			return 'https://image.tmdb.org/t/p/w185' + image.to_s
 		when 'medium-wide'
@@ -83,22 +85,63 @@ class Remote_Api
 		return Nav_Page.new(movies,raw_data['page'],raw_data['total_pages'])
 	end
 
-
-
-	def self.get_similar_movies(id)
-	 	call_api('movie/' + id.to_s + '/similar')
+	def self.get_similar_movies(id, flag = false)
+	 	raw_data = call_api('movie/' + id.to_s + '/similar')
+	 	return raw_data if flag==true
+	 	similar_movies = make_movie_list(raw_data)
+	 	return similar_movies
 	end
 
-	def self.get_movie_details(id)
-		call_api('movie/' + id.to_s)
+	def self.get_movie_details(id, flag = false)
+		raw_data = call_api('movie/' + id.to_s)
+		return raw_data if flag==false
+		title = raw_data['original_title']
+		id = raw_data['id']
+
+		opts = Hash.new
+		opts['overview'] = raw_data['overview']
+		opts['backdrop'] = get_image_url('large', raw_data["backdrop_path"])
+		opts['poster'] = get_image_url('large', raw_data["poster_path"])
+		opts['budget'] = raw_data["budget"]
+		opts['homepage'] = raw_data["homepage"]
+		opts['language'] = raw_data["original_language"]
+		opts['production_companies'] = raw_data["production_companies"]
+		opts['release_date'] = raw_data["release_date"]
+		opts['runtime'] = raw_data["runtime"]
+		opts['tagline'] = raw_data["tagline"]
+		opts['ratings'] = raw_data["vote_average"]
+		opts['cast'] = get_cast_from_movie(id)
+		opts['similar_movies'] = get_similar_movies(id)
+		opts['reviews'] = get_reviews_of_movie(id)
+
+		puts opts['reviews'].inspect
+		return Movie.new(title,id,opts)
 	end
 
-	def self.get_cast_from_movie(id)
-		call_api('movie/' + id.to_s + '/credits')
+	def self.get_cast_from_movie(id, flag = false)
+		raw_data = call_api('movie/' + id.to_s + '/credits')
+		return raw_data if flag==true
+		profiles = Array.new
+		raw_data['cast'].each do |cast|
+			name = cast['name']
+			id = cast['id']
+			picture = get_image_url('x-small',cast["profile_path"])
+			pro = Profile.new(name,id,{'profile_picture' => picture})
+			profiles.push(pro)
+		end
+		return profiles
 	end
 
-	def self.get_reviews_of_movie(id)
-		call_api('movie/' + id.to_s + '/reviews')
+	def self.get_reviews_of_movie(id, flag= false)
+		raw_data = call_api('movie/' + id.to_s + '/reviews')
+		#return raw_data if flag==true
+		reviews = Array.new
+		raw_data['results'].each do |rev|
+			id = rev['id']
+			content = rev['content']
+			reviews.push(Review.new(id,content))
+		end
+		return reviews
 	end
 
 	def self.get_movies_by_genre(id, list = false)

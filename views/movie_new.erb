@@ -1,0 +1,74 @@
+<div class="row">
+  <h1 class="text-center"><%= data.title%></h1>
+</div>
+
+<div class="row">
+  <div class="col-lg-6">
+    <img src=<%= '"' + data.backdrop.to_s + '"' %> onerror="this.src='https://d3a8mw37cqal2z.cloudfront.net/assets/f996aa2014d2ffddfda8463c479898a3/images/no-poster-w185.jpg'" alt=<%='"'+ data.title + '"'%> title=<%='"' + data.title + '"'%> class="img-thumbnail img-responsive center-block" />
+  </div> 
+  <div class="col-lg-6">
+    <p><strong>Tagline:</strong> <%= data.tagline %></p>
+
+    <p><strong>Release date:</strong> <%= data.release_date %></p>
+    
+    <p><strong>Avg. Ratings:</strong> <%= data.ratings %></p>
+
+    <p><strong>Budget:</strong> $<%= data.budget %></p>
+
+    <p><strong>Homepage: </strong><a href=<%='"' + data.homepage + '"' %> target="_blank" rel="nofollow"><%= data.homepage %></a></p>
+
+    
+
+    
+  </div> 
+</div>
+<div class="clearfix" style="margin-top:5px"></div>
+
+<div class="row">
+  <h2>Description: </h2>
+  <p><%= data.overview %></p>
+  <!-- Dispay cast -->
+  <h3>Cast: </h3>
+  <div class="container">
+    <div class="row">
+      <% data.cast[0..11].each do |c| %>
+      <a href=<%= '"http://localhost:8080/profile/' + c.id.to_s + '"' %> >
+        <div class="col-lg-1">
+          <img src=<%= '"' + (c.profile_picture || '') +'"' %> onerror="this.src='https://d3a8mw37cqal2z.cloudfront.net/assets/f996aa2014d2ffddfda8463c479898a3/images/no-poster-w185.jpg'" alt=<%='"'+ (c.name || '') + '"'%> title=<%='"' + (c.name || '') + '"'%> class="img-thumbnail img-responsive center-block" />
+          <p class="text-center"><%= (c.name || '') %></p>
+        </div>
+      </a>
+      <% end %>
+    </div>
+  </div>
+</div>
+<div class="clearfix" style="margin-top:5px"></div>
+
+
+<!-- display reviews -->
+<div class="row">
+  <hr class="divider">
+  <h2>Reviews: </h2>
+  <% data.reviews.each do |review| %>
+    <p><strong> Author:</strong> <%= review.id %></p>
+    <p><%= review.content %></p>
+    <hr class="divider">
+  <% end %>
+</div>
+
+<div class="clearfix" style="margin-top:5px"></div>
+<!-- similar movies -->
+<div class="row">
+  <div class="row" style="margin-top:25px">
+    <h4>Similar movies:</h4>
+    <% data.similar_movies[0..5].each do |sim| %>
+    <a href=<%= '"http://localhost:8080/movie/' + sim.id.to_s + '"' %> >
+      <div class="col-sm-2 thumbnail" style="min-height: 340px;"> 
+        <img src=<%= '"' + (sim.poster || '') +'"' %> onerror="this.src='https://d3a8mw37cqal2z.cloudfront.net/assets/f996aa2014d2ffddfda8463c479898a3/images/no-poster-w185.jpg'" alt=<%='"'+ sim.title + '"'%> title=<%='"' + sim.title + '"'%> class="img-thumbnail img-responsive center-block" />
+        <p class="text-center"><strong><%=sim.title %></strong></p>
+      </div>
+    </a>
+    <% end %>
+  </div>  
+</div>
+

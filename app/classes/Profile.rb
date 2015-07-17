@@ -1,6 +1,6 @@
 class Profile
 
-  attr_accessor :name, :id, :place_of_birth, :profie_picture, :birthday, :deathday, :homepage, :biography, :imdb_id, :starred_in
+  attr_accessor :name, :id, :place_of_birth, :profile_picture, :birthday, :deathday, :homepage, :biography, :imdb_id, :starred_in
 
   #initialize profile. Name and id is mendatory
   def initialize(name, id, opts={})
