@@ -1,25 +1,23 @@
 require 'net/http'
 require 'json'
+load 'app/classes/Profile.rb'
+load 'app/classes/Movie.rb'
+load 'app/classes/Review.rb'
 
 
-
-class API
+class Remote_Api
 	@@remote_api_end_point = 'https://api.themoviedb.org/3/'
 	@@api_key = 'b52469d21a984a24ec19edab6da3439e'
 	@@image_host ='https://image.tmdb.org/t/p/w185/'
 
-	@@movie_info = 'movie/'
-	@@genre = lambda {|id| 'genre/' + id + '/movies'}
 
-	def self.prepare_query(query,append= '')
+	def self.prepare_query(query,append ='')
 		return @@remote_api_end_point + query + '?api_key=' + @@api_key+ '&' + append
 	end
 
 	def self.call_api(params,apped_param ='', parse_func = nil)
 		url = prepare_query(params,apped_param)
-		#puts url
 		resp = Net::HTTP.get_response(URI.parse(url))
-		#puts resp.code
 		begin		
 			response = JSON.parse(resp.body)
 	 		response = parse_func.call(response) if parse_func
@@ -29,29 +27,54 @@ class API
 	 	end
 	end
 
-	#def self.image_url_builder()
-	#	return lambda {|x| @@image_host + x }
-	#end
 
-
-
-	@@list_parser = lambda do |source|
-		return source['results']
+	#Remote API endpoint methods
+	def self.get_now_playing_movies()
+		call_api('movie/now_playing')
 	end
+	
+	def self.get_upcoming_movies()
+		call_api('movie/upcoming')
+	end
+
+	def self.get_popular_movies()
+		call_api('movie/popular')
+	end
+
+	def self.get_similar_movies(id)
+	 	call_api('movie/' + id.to_s + '/similar')
+	end
+
+	def self.get_movie_details(id)
+		call_api('movie/' + id.to_s)
+	end
+
+	def self.get_cast_from_movie(id)
+		call_api('movie/' + id.to_s + '/credits')
+	end
+
+	def self.get_reviews_of_movie(id)
+		call_api('movie/' + id.to_s + '/reviews')
+	end
+
+	def self.get_movies_by_genre(id)
+		call_api('genre/'+id+'/movies')
+	end
+
+	def self.get_movies_by_company(id)
+		call_api('company/'+ id +'/movies')
+	end
+
+	def self.get_movies_starred_by(id)
+		call_api('person/' + id.to_s + '/movie_credits')
+	end
+
+	def self.get_profile(id)
+		call_api('person/' + id.to_s)
+	end
+
+	def self.search(keyword)
+		call_api('search/movie','query=' + keyword)
+	end
+
 end
-
-movie_parser = lambda do |source|
-	data = Hash.new
-	data.push('backdrop_path',source['backdrop_path'])
-	data.push('budget',source['budget'])
-end
-
-
-
-
-#var = API.call_api('genre/878/movies',list_parser)#.each {|x| puts x}
-#puts 'nil' if var == nil
-#puts var
-
-#https://api.themoviedb.org/3/movie/118340?api_key=b52469d21a984a24ec19edab6da3439e
-
