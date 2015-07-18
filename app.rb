@@ -10,8 +10,9 @@ set :views, "views"
 
 get '/' do
   now = Remote_Api.get_now_playing_movies(true)
+  puts now.inspect
   upcoming = Remote_Api.get_upcoming_movies(true)
-  erb :index, :locals => {'now' => now, 'upcoming'=> upcoming, 'image_host'=>'https://image.tmdb.org/t/p/w185/'}
+  erb :index, :locals => {'now' => now, 'upcoming'=> upcoming }
 end
 
 get '/movie/:id'	do

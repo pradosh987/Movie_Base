@@ -2,12 +2,12 @@
 	<div class="row">
 	<h2>Now Playing In Threaters</h2>
 	<div class="row">
-		<% now['results'][0..3].each do |movie| %>
-		<div class="col-lg-6">
-  		<h3><%= movie['original_title']%></h3>
+		<% now[0..5].each do |movie| %>
+		<div class="col-lg-4">
+  		<h3><%= movie.title %></h3>
   		<!-- Image here> -->
-  		<a href=<%= '"http://localhost:8080/movie/' + movie['id'].to_s + '"' %> >
-  		<img src=<%= '"https://image.tmdb.org/t/p/w500_and_h281_bestv2' + movie['backdrop_path'] +'"' %> alt=<%='"'+ movie['original_title'] + '"'%> title=<%='"' + movie['original_title'] + '"'%> class="img-thumbnail img-responsive center-block">
+  		<a href=<%= '"http://localhost:8080/movie/' + movie.id.to_s + '"' %> >
+  		<img src=<%= movie.poster %> onerror="this.src='https://d3a8mw37cqal2z.cloudfront.net/assets/f996aa2014d2ffddfda8463c479898a3/images/no-poster-w185.jpg'" alt=<%='"'+ movie.title + '"'%> title=<%='"' + movie.title + '"'%> class="img-thumbnail img-responsive center-block">
   		</a>
 		</div>
 		<% end %>
@@ -16,12 +16,12 @@
 	<div class="row">
 	<h2>Releasing Soon</h2>
 		<div class="row">
-			<% upcoming['results'][0..3].each do |movie| %>
-			<div class="col-lg-6">
-  			<h3><%= movie['original_title']%></h3>
+			<% upcoming[0..5].each do |movie| %>
+			<div class="col-lg-4">
+  			<h3><%= movie.title%></h3>
   			<!-- Image here> -->
-  			<a href=<%= '"http://localhost:8080/movie/' + movie['id'].to_s + '"' %> >
-  			<img src=<%= '"https://image.tmdb.org/t/p/w500_and_h281_bestv2' + movie['backdrop_path'] +'"' %> alt=<%='"'+ movie['original_title'] + '"'%> title=<%='"' + movie['original_title'] + '"'%> class="img-thumbnail img-responsive center-block">
+  			<a href=<%= '"http://localhost:8080/movie/' + movie.id.to_s + '"' %> >
+  			<img src=<%=  movie.poster.to_s %> onerror="this.src='https://d3a8mw37cqal2z.cloudfront.net/assets/f996aa2014d2ffddfda8463c479898a3/images/no-poster-w185.jpg'" alt=<%='"'+ movie.title.to_s + '"'%> title=<%='"' + movie.title.to_s + '"'%> class="img-thumbnail img-responsive center-block">
   			</a>
 			</div>
 		<% end %>

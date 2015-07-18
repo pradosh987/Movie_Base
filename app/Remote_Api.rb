@@ -57,6 +57,7 @@ class Remote_Api
 			name = movie['original_title']
 			id = movie['id']
 			poster = get_image_url('small', movie['poster_path'])
+			backdrop = get_image_url('large', raw_data["backdrop_path"])
 			overview = movie['overview']
 			m = Movie.new(name, id, {'poster' => poster, 'overview' => overview})
 			movies.push(m)
@@ -67,15 +68,18 @@ class Remote_Api
 	#Remote API endpoint methods
 	def self.get_now_playing_movies(list = false)
 		raw_data = call_api('movie/now_playing')
-		return raw_data if list==true
+
 		movies = make_movie_list(raw_data)
+		return movies if list==true
+		
 		return Nav_Page.new(movies,raw_data['page'],raw_data['total_pages'])
 	end
 	
 	def self.get_upcoming_movies(list = false)
 		raw_data = call_api('movie/upcoming')
-		return raw_data if list==true
-		return Nav_Page.new(make_movie_list(raw_data),raw_data['page'],raw_data['total_pages'])
+		movies = make_movie_list(raw_data)
+		return movies if list==true
+		return Nav_Page.new(movies,raw_data['page'],raw_data['total_pages'])
 	end
 
 	def self.get_popular_movies(list = false)
@@ -130,7 +134,7 @@ class Remote_Api
 		return profiles
 	end
 
-	def self.get_reviews_of_movie(id, flag= false)
+	def self.get_reviews_of_movie(id)
 		raw_data = call_api('movie/' + id.to_s + '/reviews')
 		#return raw_data if flag==true
 		reviews = Array.new
