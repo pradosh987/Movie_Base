@@ -125,7 +125,7 @@ class Remote_Api
 			name = cast['name']
 			id = cast['id']
 			picture = get_image_url('x-small',cast["profile_path"])
-			pro = Profile.new(name,id,{'profile_picture' => picture})
+			pro = Profile.new(id,name,{'profile_picture' => picture})
 			profiles.push(pro)
 		end
 		return profiles
