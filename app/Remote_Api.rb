@@ -75,22 +75,19 @@ class Remote_Api
 	def self.get_upcoming_movies(list = false)
 		raw_data = call_api('movie/upcoming')
 		return raw_data if list==true
-		movies = make_movie_list(raw_data)
-		return Nav_Page.new(movies,raw_data['page'],raw_data['total_pages'])
+		return Nav_Page.new(make_movie_list(raw_data),raw_data['page'],raw_data['total_pages'])
 	end
 
 	def self.get_popular_movies(list = false)
 		return call_api('movie/popular') if list==true
 		raw_data = call_api('movie/popular')
-		movies = make_movie_list(raw_data)
-		return Nav_Page.new(movies,raw_data['page'],raw_data['total_pages'])
+		return Nav_Page.new(make_movie_list(raw_data),raw_data['page'],raw_data['total_pages'])
 	end
 
 	def self.get_similar_movies(id, flag = false)
 	 	raw_data = call_api('movie/' + id.to_s + '/similar')
 	 	return raw_data if flag==true
-	 	similar_movies = make_movie_list(raw_data)
-	 	return similar_movies
+	 	return make_movie_list(raw_data)
 	end
 
 	def self.get_movie_details(id, flag = false)
@@ -148,22 +145,19 @@ class Remote_Api
 	def self.get_movies_by_genre(id, list = false)
 		raw_data = call_api('genre/'+id+'/movies')
 		return raw_data if list==true
-			movies = make_movie_list(raw_data)
-		return Nav_Page.new(movies,raw_data['page'],raw_data['total_pages'])
+		return Nav_Page.new(make_movie_list(raw_data),raw_data['page'],raw_data['total_pages'])
 	end
 
 	def self.get_movies_by_company(id, list = false)
 		raw_data =  call_api('company/'+ id +'/movies')
 		return raw_data if list==true
-			movies = make_movie_list(raw_data)
-		return Nav_Page.new(movies,raw_data['page'],raw_data['total_pages'])
+		return Nav_Page.new(make_movie_list(raw_data),raw_data['page'],raw_data['total_pages'])
 	end
 
 	def self.get_movies_starred_by(id)
 		raw_data = call_api('person/' + id.to_s + '/movie_credits')
 		puts raw_data.inspect 
-		movies = make_movie_list(raw_data)
-		return Nav_Page.new(movies,raw_data['page'],raw_data['total_pages'])
+		return Nav_Page.new(make_movie_list(raw_data),raw_data['page'],raw_data['total_pages'])
 	end
 
 	def self.get_profile(id)
@@ -183,8 +177,7 @@ class Remote_Api
 	def self.search(keyword, list=false)
 		raw_data =  call_api('search/movie','query=' + keyword)
 		return raw_data if list==true
-			movies = make_movie_list(raw_data)
-		return Nav_Page.new(movies,raw_data['page'],raw_data['total_pages'])
+		return Nav_Page.new(make_movie_list(raw_data),raw_data['page'],raw_data['total_pages'])
 	end
 
 end
