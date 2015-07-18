@@ -39,7 +39,7 @@ class Remote_Api
 		when 'small-wide'
 			return URI.encode(image_host_1 + '185' + image.to_s)
 		when 'medium-wide'
-			return URI.encode(image_host_1 + '185' + image.to_s)
+			return URI.encode(image_host_1 + '500_and_h281_bestv2' + image.to_s)
 		when 'large-wide'
 			return URI.encode(image_host_1 + '185' + image.to_s)
 		else
@@ -47,6 +47,7 @@ class Remote_Api
 		end
 	end
 
+	#pass list as true if you want array of movies otherwise it returns a Page object
 	def self.make_movie_list_or_page(raw_data,list = false)
 		movies = Array.new 
 
