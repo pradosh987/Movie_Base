@@ -30,21 +30,22 @@ class Remote_Api
 	end
 
 	def self.get_image_url(type, image)
+		image_host_1 = 'https://image.tmdb.org/t/p/w'
 		case type
 		when 'x-small'
-			return URI.encode('https://image.tmdb.org/t/p/w92' + image.to_s)
+			return URI.encode(image_host_1 + '92' + image.to_s)
 		when 'small'
-			return URI.encode('https://image.tmdb.org/t/p/w185' + image.to_s)
+			return URI.encode(image_host_1 + '185' + image.to_s)
 		when 'medium'
-			return URI.encode('https://image.tmdb.org/t/p/w185' + image.to_s)
+			return URI.encode(image_host_1 + '185' + image.to_s)
 		when 'large'
-			return URI.encode('https://image.tmdb.org/t/p/w780' + image.to_s)
+			return URI.encode(image_host_1 + '780' + image.to_s)
 		when 'small-wide'
-			return URI.encode('https://image.tmdb.org/t/p/w185' + image.to_s)
+			return URI.encode(image_host_1 + '185' + image.to_s)
 		when 'medium-wide'
-			return URI.encode('https://image.tmdb.org/t/p/w185' + image.to_s)
+			return URI.encode(image_host_1 + '185' + image.to_s)
 		when 'large-wide'
-			return URI.encode('https://image.tmdb.org/t/p/w185' + image.to_s)
+			return URI.encode(image_host_1 + '185' + image.to_s)
 		else
 			return URI.encode('https://d3a8mw37cqal2z.cloudfront.net/assets/f996aa2014d2ffddfda8463c479898a3/images/no-poster-w185.jpg')
 		end
