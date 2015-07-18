@@ -152,22 +152,19 @@ class Remote_Api
 		return reviews
 	end
 
-	def self.get_movies_by_genre(id, list = false)
+	def self.get_movies_by_genre(id)
 		raw_data = call_api('genre/'+id+'/movies')
-		return raw_data if list==true
-		return Nav_Page.new(make_movie_list(raw_data),raw_data['page'],raw_data['total_pages'])
+		return @@make_list_or_page.call(raw_data,false)
 	end
 
 	def self.get_movies_by_company(id, list = false)
 		raw_data =  call_api('company/'+ id +'/movies')
-		return raw_data if list==true
-		return Nav_Page.new(make_movie_list(raw_data),raw_data['page'],raw_data['total_pages'])
+		return @@make_list_or_page.call(raw_data,false)
 	end
 
 	def self.get_movies_starred_by(id)
 		raw_data = call_api('person/' + id.to_s + '/movie_credits')
-		puts raw_data.inspect 
-		return Nav_Page.new(make_movie_list(raw_data),raw_data['page'],raw_data['total_pages'])
+		return @@make_list_or_page.call(raw_data,false)
 	end
 
 	def self.get_profile(id)
@@ -184,10 +181,9 @@ class Remote_Api
 	 return pro
 	end
 
-	def self.search(keyword, list=false)
+	def self.search(keyword)
 		raw_data =  call_api('search/movie','query=' + keyword)
-		return raw_data if list==true
-		return Nav_Page.new(make_movie_list(raw_data),raw_data['page'],raw_data['total_pages'])
+		return @@make_list_or_page.call(raw_data,false)
 	end
 
 end

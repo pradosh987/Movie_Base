@@ -17,7 +17,7 @@ end
 
 get '/movie/:id'	do
 	id = params[:id]
-  var = Remote_Api.get_movie_details(id,true)
+  var = Remote_Api.get_movie_details(id)
 erb :movie, :locals=>{'id'=> id, 'data'=> var} 
 end
 
