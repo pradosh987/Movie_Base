@@ -50,8 +50,9 @@
 <div class="row">
   <hr class="divider">
   <h2>Reviews: </h2>
-  <% data.reviews.each do |review| %>
-    <p><strong> Author:</strong> <%= review.id %></p>
+  <%= reviews.inspect %>
+  <% reviews.each do |review| %>
+    <p><strong> Author:</strong> <%= review.author %></p>
     <p><%= review.content %></p>
     <hr class="divider">
   <% end %>

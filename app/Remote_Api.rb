@@ -112,8 +112,7 @@ class Remote_Api
 		opts['cast'] = get_cast_from_movie(id)
 		opts['similar_movies'] = get_similar_movies(id)
 		opts['reviews'] = get_reviews_of_movie(id)
-
-		#puts opts['simi'].inspect
+		#puts opts['reviews'].inspect
 		return Movie.new(title,id,opts)
 	end
 
@@ -136,7 +135,8 @@ class Remote_Api
 		raw_data['results'].each do |rev|
 			id = rev['id']
 			content = rev['content']
-			reviews.push(Review.new(id,content))
+			author =rev['author']
+			reviews.push(Review.new(id,content,author))
 		end
 		return reviews
 	end

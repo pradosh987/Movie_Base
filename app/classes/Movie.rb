@@ -1,6 +1,6 @@
 class Movie
 
-	attr_accessor :title, :backdrop, :poster, :budget, :genres, :homepage, :id, :imdb_id, :language, :overview, :production_companies, :release_date, :runtime, :tagline, :ratings, :reviews, :cast, :similar_movies
+	attr_accessor :title, :backdrop, :poster, :budget, :genres, :homepage, :id, :imdb_id, :language, :overview, :production_companies, :release_date, :runtime, :tagline, :ratings, :cast, :similar_movies, :reviews
 
 	#initialize Movie. Name and id is mendatory
   def initialize(title, id, opts={},reviews: {})
