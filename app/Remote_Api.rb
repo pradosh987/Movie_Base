@@ -4,6 +4,8 @@ load 'app/classes/Profile.rb'
 load 'app/classes/Movie.rb'
 load 'app/classes/Review.rb'
 load 'app/classes/Nav_Page.rb'
+load 'app/classes/Genre.rb'
+load 'app/classes/Production_Company.rb'
 require 'uri'
 
 
@@ -11,7 +13,6 @@ class Remote_Api
 	@@remote_api_end_point = 'https://api.themoviedb.org/3/'
 	@@api_key = 'b52469d21a984a24ec19edab6da3439e'
 	@@image_host ='https://image.tmdb.org/t/p/w185/'
-
 
 	def self.prepare_query(query,append ='')
 		return URI.encode(@@remote_api_end_point + query + '?api_key=' + @@api_key+ '&' + append)
@@ -102,11 +103,23 @@ class Remote_Api
 		opts['budget'] = raw_data["budget"]
 		opts['homepage'] = raw_data["homepage"]
 		opts['language'] = raw_data["original_language"]
-		opts['production_companies'] = raw_data["production_companies"]
 		opts['release_date'] = raw_data["release_date"]
 		opts['runtime'] = raw_data["runtime"]
 		opts['tagline'] = raw_data["tagline"]
 		opts['ratings'] = raw_data["vote_average"]
+		
+		genre = Array.new
+		raw_data['genres'].each do |g|
+			genre.push(Genre.new(g['id'], g['name']))
+		end
+		opts['genres'] = genre
+
+		companies = Array.new
+		raw_data['production_companies'].each do |g|
+			companies.push(Production_Company.new(g['id'], g['name']))
+		end
+		opts['production_companies'] = companies
+		
 		opts['cast'] = get_cast_from_movie(id)
 		opts['similar_movies'] = get_similar_movies(id)
 		opts['reviews'] = get_reviews_of_movie(id)
