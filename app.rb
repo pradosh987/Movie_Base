@@ -17,10 +17,7 @@ end
 get '/movie/:id'	do
 	id = params[:id]
   var = Remote_Api.get_movie_details(id,true)
-  #similar = Remote_Api.get_similar_movies(id)
-  #cast = Remote_Api.get_cast_from_movie(id)
-  #reviews = Remote_Api.get_reviews_of_movie(id)
-  erb :movie, :locals=>{'id'=> id, 'data'=> var} 
+erb :movie, :locals=>{'id'=> id, 'data'=> var} 
 end
 
 get '/list/:caller/:id' do
@@ -63,7 +60,6 @@ end
 get '/profile/:id' do
   id = params[:id]
   profile_info = Remote_Api.get_profile(id)
-  # starred_in = Remote_Api.get_movies_starred_by(id)
   erb :profile, :locals => {'data' => profile_info}
 end
 
@@ -81,13 +77,4 @@ end
 get '/upcoming/' do
   var = Remote_Api.get_upcoming_movies
   erb :list, :locals => {'title' => 'Upcoming Movies', 'page' => var}
-end
-
-#test code block
-get '/test/' do
-  var = Remote_Api.get_upcoming_movies
-  erb :list, :locals => {'title' => 'Upcoming Movies', 'page' => var} 
-  #puts 'here:' + var.page.to_s
-  # var.data.each {|x| puts x.name}
-  # "HEllo"
 end
