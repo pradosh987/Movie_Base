@@ -12,7 +12,6 @@ require 'uri'
 class Remote_Api
 	@@remote_api_end_point = 'https://api.themoviedb.org/3/'
 	@@api_key = 'b52469d21a984a24ec19edab6da3439e'
-	@@image_host ='https://image.tmdb.org/t/p/w185/'
 
 	def self.prepare_query(query,append ='')
 		return URI.encode(@@remote_api_end_point + query + '?api_key=' + @@api_key+ '&' + append)
@@ -64,12 +63,6 @@ class Remote_Api
 		return Nav_Page.new(movies,raw_data['page'],raw_data['total_pages'])
 	end
 
-	@@make_list_or_page = lambda do |raw_data,flag|
-		movies = make_movie_list(raw_data)
-		return movies if flag==true
-		return Nav_Page.new(movies,raw_data['page'],raw_data['total_pages'])
-	end
-
 	#Remote API endpoint methods
 	def self.get_now_playing_movies(list = false)
 		raw_data = call_api('movie/now_playing')
@@ -109,15 +102,11 @@ class Remote_Api
 		opts['ratings'] = raw_data["vote_average"]
 		
 		genre = Array.new
-		raw_data['genres'].each do |g|
-			genre.push(Genre.new(g['id'], g['name']))
-		end
+		raw_data['genres'].each {|g| genre.push(Genre.new(g['id'], g['name']))}
 		opts['genres'] = genre
 
 		companies = Array.new
-		raw_data['production_companies'].each do |g|
-			companies.push(Production_Company.new(g['id'], g['name']))
-		end
+		raw_data['production_companies'].each {|g| companies.push(Production_Company.new(g['id'], g['name']))}
 		opts['production_companies'] = companies
 		
 		opts['cast'] = get_cast_from_movie(id)
