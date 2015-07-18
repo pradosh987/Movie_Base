@@ -20,7 +20,29 @@
 
 
 
+<div class="row" style="margin-top: 25px">
+	<h2><strong>Biography:</strong></h2>
+	<p><%= data.biography %></p>
+	<h3>Starred in: </h3>
 
 
+	<% count = 0 %>
+	<% data.starred_in[0..11].each do |movie| %>
+	<% if  count%6 ==0%>
+	<div class="row">
+		<% end %>
+		<a href=<%= '"http://localhost:8080/movie/' + movie.id.to_s + '"' %> >
+			<div class="col-sm-2" > 
+				<img src=<%= '"' + movie.poster + '"' %> onerror="this.src='https://d3a8mw37cqal2z.cloudfront.net/assets/f996aa2014d2ffddfda8463c479898a3/images/no-poster-w185.jpg'" alt=<%='"'+ movie.title + '"'%> title=<%='"' + movie.title + '"'%> class="img-thumbnail img-responsive center-block" />
+				<p class="text-center"><strong><%=movie.title %></strong></p>
+			</div>
+		</a>
+
+		<% if count%6==5 %>
+	</div>
+	<% end %>
+	<% count+=1 %>
+	<% end %>
 
 
+</div>

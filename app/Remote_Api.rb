@@ -113,13 +113,12 @@ class Remote_Api
 		opts['similar_movies'] = get_similar_movies(id)
 		opts['reviews'] = get_reviews_of_movie(id)
 
-		puts opts['reviews'].inspect
+		#puts opts['simi'].inspect
 		return Movie.new(title,id,opts)
 	end
 
-	def self.get_cast_from_movie(id, flag = false)
+	def self.get_cast_from_movie(id)
 		raw_data = call_api('movie/' + id.to_s + '/credits')
-		return raw_data if flag==true
 		profiles = Array.new
 		raw_data['cast'].each do |cast|
 			name = cast['name']
@@ -154,7 +153,9 @@ class Remote_Api
 
 	def self.get_movies_starred_by(id)
 		raw_data = call_api('person/' + id.to_s + '/movie_credits')
-		make_movie_list_or_page(raw_data)
+		movies = Array.new
+		raw_data['cast'].each {|m| movies.push(Movie.new(m['original_title'],m['id'], {'poster' => get_image_url('small', m['poster_path'])}))}
+		movies
 	end
 
 	def self.get_profile(id)
@@ -166,7 +167,7 @@ class Remote_Api
 	 opts['biography'] = raw_data['biography']
 	 opts['profile_picture'] = get_image_url('medium-wide',raw_data['profile_path'])
 	 opts['homepage'] = raw_data['homepage']
-	 #opts['starred_in'] = get_movies_starred_by(id)
+	 opts['starred_in'] = get_movies_starred_by(id)
 	 pro = Profile.new(id,name,opts)
 	 return pro
 	end
