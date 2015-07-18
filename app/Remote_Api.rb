@@ -65,10 +65,8 @@ class Remote_Api
 	#Remote API endpoint methods
 	def self.get_now_playing_movies(list = false)
 		raw_data = call_api('movie/now_playing')
-
 		movies = make_movie_list(raw_data)
 		return movies if list==true
-		
 		return Nav_Page.new(movies,raw_data['page'],raw_data['total_pages'])
 	end
 	
@@ -133,7 +131,6 @@ class Remote_Api
 
 	def self.get_reviews_of_movie(id)
 		raw_data = call_api('movie/' + id.to_s + '/reviews')
-		#return raw_data if flag==true
 		reviews = Array.new
 		raw_data['results'].each do |rev|
 			id = rev['id']
