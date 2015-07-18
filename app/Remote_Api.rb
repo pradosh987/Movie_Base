@@ -47,7 +47,8 @@ class Remote_Api
 		end
 	end
 
-	#pass list as true if you want array of movies otherwise it returns a Page object
+	#pass list as true if you want array of movies otherwise it returns a Page
+	#object
 	def self.make_movie_list_or_page(raw_data,list = false)
 		movies = Array.new 
 

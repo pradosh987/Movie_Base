@@ -6,22 +6,8 @@
 	<% if (index % (page.data.length/2)) == 0 %>
 	<div class="col-md-6" >
 	<% end %>
-
-		<div class="row well " style="max-height: 300px">
-			<div class="col-md-4">
-				<a href=<%= '"http://localhost:8080/movie/'+ movie.id.to_s + '"' %> ><img src=<%= '"'+ movie.poster + '"' %>  onerror="this.src='https://d3a8mw37cqal2z.cloudfront.net/assets/f996aa2014d2ffddfda8463c479898a3/images/no-poster-w185.jpg'" alt=<%='"'+ movie.title.to_s + '"'%> title=<%='"' + movie.title.to_s+ '"'%> class="img-thumbnail img-responsive center-block"  /></a>
-			</div>
-
-			<div class="col-md-8">
-				<div class="truncate"><a href=<%= '"http://localhost:8080/movie/' + movie.id.to_s + '"' %>><h2><%= movie.title.to_s %></h2></a>
-					<p><%= movie.overview %></p>
-				</div>
-				<!--<div style="min-height: 30px"></div> -->
-				<p><a class="btn btn-default pull-right" href=<%= '"http://localhost:8080/movie/' + movie.id.to_s + '"' %> >Read More...</a></p>
-			</div>
-		</div>
-
-
+		<!-- REVIEW: It's a good idea to define partials for a row item -->
+		<%= erb :_movie, :locals => {:movie => movie} %>
 	<% if (index % (page.data.length/2))==((page.data.length/2) -1) %>
 	</div>
 	<% end %>

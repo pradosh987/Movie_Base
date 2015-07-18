@@ -8,7 +8,7 @@ set :static, true
 set :public_folder, "public"
 set :views, "views"
 
-get '/' do
+get '/?' do
   now = Remote_Api.get_now_playing_movies(true)
   upcoming = Remote_Api.get_upcoming_movies(true)
   erb :index, :locals => {'now' => now, 'upcoming'=> upcoming }
@@ -63,18 +63,18 @@ get '/profile/:id' do
   erb :profile, :locals => {'data' => profile_info}
 end
 
-get '/now_playing/' do
+get '/now_playing/?' do
   var = Remote_Api.get_now_playing_movies
   title = 'Now Playing'
   erb :list, :locals => {'title' => title, 'page' => var}
 end
 
-get '/popular/' do
+get '/popular/?' do
   var = Remote_Api.get_popular_movies
   erb :list, :locals => {'title' => 'Popular Movies', 'page' => var}
 end
 
-get '/upcoming/' do
+get '/upcoming/?' do
   var = Remote_Api.get_upcoming_movies
   erb :list, :locals => {'title' => 'Upcoming Movies', 'page' => var}
 end
