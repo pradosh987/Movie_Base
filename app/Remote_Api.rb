@@ -20,13 +20,9 @@ class Remote_Api
 	def self.call_api(params,apped_param ='', parse_func = nil)
 		url = prepare_query(params,apped_param)
 		resp = Net::HTTP.get_response(URI.parse(url))
-		begin		
-			response = JSON.parse(resp.body)
-	 		response = parse_func.call(response) if parse_func
-	 		return response
-	 	rescue
-	 		return nil
-	 	end
+		response = JSON.parse(resp.body)
+		response = parse_func.call(response) if parse_func
+	 	return response
 	end
 
 	def self.get_image_url(type, image)
