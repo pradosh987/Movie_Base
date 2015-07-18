@@ -48,7 +48,7 @@ class Remote_Api
 		end
 	end
 
-	def self.make_movie_list(raw_data)
+	def self.make_movie_list_or_page(raw_data,list = false)
 		movies = Array.new 
 
 		raw_data['results'].each do |movie|
@@ -60,7 +60,8 @@ class Remote_Api
 			m = Movie.new(name, id, {'poster' => poster, 'overview' => overview})
 			movies.push(m)
 		end
-		return movies
+		return movies if list == true
+		return Nav_Page.new(movies,raw_data['page'],raw_data['total_pages'])
 	end
 
 	@@make_list_or_page = lambda do |raw_data,flag|
@@ -72,22 +73,22 @@ class Remote_Api
 	#Remote API endpoint methods
 	def self.get_now_playing_movies(list = false)
 		raw_data = call_api('movie/now_playing')
-		@@make_list_or_page.call(raw_data,list)
+		make_movie_list_or_page(raw_data,list)
 	end
 	
 	def self.get_upcoming_movies(list = false)
 		raw_data = call_api('movie/upcoming')
-		@@make_list_or_page.call(raw_data,list)
+		make_movie_list_or_page(raw_data,list)
 	end
 
 	def self.get_popular_movies(list = false)
 		raw_data = call_api('movie/popular')
-		@@make_list_or_page.call(raw_data,list)
+		make_movie_list_or_page(raw_data,list)
 	end
 
 	def self.get_similar_movies(id)
 	 	raw_data = call_api('movie/' + id.to_s + '/similar')
-	 	return make_movie_list(raw_data)
+	 	return make_movie_list_or_page(raw_data,true)
 	end
 
 	def self.get_movie_details(id)
@@ -154,17 +155,17 @@ class Remote_Api
 
 	def self.get_movies_by_genre(id)
 		raw_data = call_api('genre/'+id+'/movies')
-		return @@make_list_or_page.call(raw_data,false)
+		make_movie_list_or_page(raw_data)
 	end
 
 	def self.get_movies_by_company(id, list = false)
 		raw_data =  call_api('company/'+ id +'/movies')
-		return @@make_list_or_page.call(raw_data,false)
+		make_movie_list_or_page(raw_data,list)
 	end
 
 	def self.get_movies_starred_by(id)
 		raw_data = call_api('person/' + id.to_s + '/movie_credits')
-		return @@make_list_or_page.call(raw_data,false)
+		make_movie_list_or_page(raw_data)
 	end
 
 	def self.get_profile(id)
@@ -183,7 +184,7 @@ class Remote_Api
 
 	def self.search(keyword)
 		raw_data =  call_api('search/movie','query=' + keyword)
-		return @@make_list_or_page.call(raw_data,false)
+		make_movie_list_or_page(raw_data)
 	end
 
 end
