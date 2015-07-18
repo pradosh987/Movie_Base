@@ -18,8 +18,7 @@ end
 get '/movie/:id'	do
 	id = params[:id]
   var = Remote_Api.get_movie_details(id)
-  #puts var.reviews.inspect
-erb :movie, :locals=>{'id'=> id, 'data'=> var, 'reviews' => var.reviews} 
+erb :movie, :locals=>{'id'=> id, 'data'=> var} 
 end
 
 get '/list/:caller/:id' do

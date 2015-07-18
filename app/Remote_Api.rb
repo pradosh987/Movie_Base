@@ -111,7 +111,7 @@ class Remote_Api
 		
 		opts['cast'] = get_cast_from_movie(id)
 		opts['similar_movies'] = get_similar_movies(id)
-		opts['reviews'] = get_reviews_of_movie(id)
+		#opts['reviews'] = get_reviews_of_movie(id)
 		#puts opts['reviews'].inspect
 		return Movie.new(title,id,opts)
 	end
