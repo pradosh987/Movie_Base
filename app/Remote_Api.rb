@@ -92,7 +92,7 @@ class Remote_Api
 
 		opts = Hash.new
 		opts['overview'] = raw_data['overview']
-		opts['backdrop'] = get_image_url('large', raw_data["backdrop_path"])
+		opts['backdrop'] = get_image_url('medium-wide', raw_data["poster_path"])
 		opts['poster'] = get_image_url('large', raw_data["poster_path"])
 		opts['budget'] = raw_data["budget"]
 		opts['homepage'] = raw_data["homepage"]
