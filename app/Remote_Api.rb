@@ -7,14 +7,19 @@ load 'app/classes/Nav_Page.rb'
 load 'app/classes/Genre.rb'
 load 'app/classes/Production_Company.rb'
 require 'uri'
+require 'csv'
 
 
 class Remote_Api
-	@@remote_api_end_point = 'https://api.themoviedb.org/3/'
-	@@api_key = 'b52469d21a984a24ec19edab6da3439e'
+	# @@remote_api_end_point = 'https://api.themoviedb.org/3/'
+	# @@api_key = 'b52469d21a984a24ec19edab6da3439e'
+	@@remote_api_end_point = 'http://www.omdbapi.com/?t='
+	@@api_key = ''
+	
+
 
 	def self.prepare_query(query,append ='')
-		return URI.encode(@@remote_api_end_point + query + '?api_key=' + @@api_key+ '&' + append)
+		return URI.encode(@@remote_api_end_point + append)
 	end
 
 	def self.call_api(params,apped_param ='', parse_func = nil)
@@ -65,19 +70,41 @@ class Remote_Api
 	end
 
 	#Remote API endpoint methods
+	# def self.get_now_playing_movies(list = false)
+	# 	raw_data = call_api('movie/now_playing')
+	# 	make_movie_list_or_page(raw_data,list)
+	# end
+
 	def self.get_now_playing_movies(list = false)
-		raw_data = call_api('movie/now_playing')
-		make_movie_list_or_page(raw_data,list)
-	end
-	
-	def self.get_upcoming_movies(list = false)
-		raw_data = call_api('movie/upcoming')
-		make_movie_list_or_page(raw_data,list)
+		movies = Array.new
+		CSV.foreach('app/secondary_api/upcoming.csv') do |movie|
+			movies.push(get_movie_details(movie[0]))
+		end
+		return movies if list == true
+		return Nav_Page.new(movies,1,1)
 	end
 
+	def self.get_upcoming_movies(list = false)
+		movies = Array.new
+		CSV.foreach('app/secondary_api/now_playing.csv') do |movie|
+			movies.push(get_movie_details(movie[0]))
+		end
+		return movies if list == true
+		return Nav_Page.new(movies,1,1)
+	end
+	
+	# def self.get_upcoming_movies(list = false)
+	# 	raw_data = call_api('movie/upcoming')
+	# 	make_movie_list_or_page(raw_data,list)
+	# end
+
 	def self.get_popular_movies(list = false)
-		raw_data = call_api('movie/popular')
-		make_movie_list_or_page(raw_data,list)
+		movies = Array.new
+		CSV.foreach('app/secondary_api/popular.csv') do |movie|
+			movies.push(get_movie_details(movie[0]))
+		end
+		return movies if list == true
+		return Nav_Page.new(movies,1,1)
 	end
 
 	def self.get_similar_movies(id)
@@ -86,36 +113,64 @@ class Remote_Api
 	end
 
 	def self.get_movie_details(id)
-		raw_data = call_api('movie/' + id.to_s)
-		title = raw_data['original_title']
-		id = raw_data['id']
-
-		opts = Hash.new
-		opts['overview'] = raw_data['overview']
-		opts['backdrop'] = get_image_url('medium-wide', raw_data["poster_path"])
-		opts['poster'] = get_image_url('large', raw_data["poster_path"])
-		opts['budget'] = raw_data["budget"]
-		opts['homepage'] = raw_data["homepage"]
-		opts['language'] = raw_data["original_language"]
-		opts['release_date'] = raw_data["release_date"]
-		opts['runtime'] = raw_data["runtime"]
-		opts['tagline'] = raw_data["tagline"]
-		opts['ratings'] = raw_data["vote_average"]
-		
-		genre = Array.new
-		raw_data['genres'].each {|g| genre.push(Genre.new(g['id'], g['name']))}
-		opts['genres'] = genre
-
-		companies = Array.new
-		raw_data['production_companies'].each {|g| companies.push(Production_Company.new(g['id'], g['name']))}
-		opts['production_companies'] = companies
-		
-		opts['cast'] = get_cast_from_movie(id)
-		opts['similar_movies'] = get_similar_movies(id)
-		#opts['reviews'] = get_reviews_of_movie(id)
-		#puts opts['reviews'].inspect
-		return Movie.new(title,id,opts)
+		CSV.foreach('app/secondary_api/movies.csv') do |movie|
+  		# puts movie.inspect
+  		if(movie[0]==id)
+  			title = movie[1]
+  			opts = Hash.new
+				opts['overview'] = movie[2]
+				opts['ratings'] = movie[3]
+				opts['release_date'] = movie[4]
+				opts['backdrop'] = get_image_url('medium-wide', movie[5])
+				opts['poster'] = get_image_url('large', movie[5])
+				#blank out whats not available
+				opts['budget'] = ''
+				opts['homepage'] = ''
+				opts['language'] = ''
+				opts['runtime'] = ''
+				opts['tagline'] = ''
+				opts['genres'] = {}
+				opts['production_companies'] = {}
+				opts['cast'] = {}
+				opts['similar_movies'] = {}
+				return Movie.new(title,id,opts)
+  		end
+		end
 	end
+
+	# def self.get_movie_details(id)
+
+
+	# 	raw_data = call_api('movie/' + id.to_s)
+	# 	title = raw_data['original_title']
+	# 	id = raw_data['id']
+
+	# 	opts = Hash.new
+	# 	opts['overview'] = raw_data['overview']
+	# 	opts['backdrop'] = get_image_url('medium-wide', raw_data["poster_path"])
+	# 	opts['poster'] = get_image_url('large', raw_data["poster_path"])
+	# 	opts['budget'] = raw_data["budget"]
+	# 	opts['homepage'] = raw_data["homepage"]
+	# 	opts['language'] = raw_data["original_language"]
+	# 	opts['release_date'] = raw_data["release_date"]
+	# 	opts['runtime'] = raw_data["runtime"]
+	# 	opts['tagline'] = raw_data["tagline"]
+	# 	opts['ratings'] = raw_data["vote_average"]
+		
+	# 	genre = Array.new
+	# 	raw_data['genres'].each {|g| genre.push(Genre.new(g['id'], g['name']))}
+	# 	opts['genres'] = genre
+
+	# 	companies = Array.new
+	# 	raw_data['production_companies'].each {|g| companies.push(Production_Company.new(g['id'], g['name']))}
+	# 	opts['production_companies'] = companies
+		
+	# 	opts['cast'] = get_cast_from_movie(id)
+	# 	opts['similar_movies'] = get_similar_movies(id)
+	# 	#opts['reviews'] = get_reviews_of_movie(id)
+	# 	#puts opts['reviews'].inspect
+	# 	return Movie.new(title,id,opts)
+	# end
 
 	def self.get_cast_from_movie(id)
 		raw_data = call_api('movie/' + id.to_s + '/credits')
@@ -174,8 +229,26 @@ class Remote_Api
 	end
 
 	def self.search(keyword)
-		raw_data =  call_api('search/movie','query=' + keyword)
-		make_movie_list_or_page(raw_data)
+		raw_data =  call_api('',CGI::unescape(keyword))
+		title = raw_data['Title']
+		id = 'N/A'
+		opts = Hash.new
+		opts['overview'] = raw_data['Plot']
+		opts['ratings'] = raw_data['imdbRating']
+		opts['release_date'] = raw_data['Released']
+		opts['backdrop'] = raw_data['Poster']
+		opts['poster'] = raw_data['Poster']
+		#blank out whats not available
+		opts['budget'] = ''
+		opts['homepage'] = ''
+		opts['Language'] = ''
+		opts['runtime'] = ''
+		opts['tagline'] = ''
+		opts['genres'] = {}
+		opts['production_companies'] = {}
+		opts['cast'] = {}
+		opts['similar_movies'] = {}
+		return (Movie.new(title,id,opts))
 	end
 
 end
