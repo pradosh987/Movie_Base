@@ -1,45 +1,26 @@
 <div class="row">
-	<h1 class="text-center"><%= data['name']%></h1>
+	<h1 class="text-center"><%= data.name %></h1>
 </div>
 <div class="row">
 	<div class="col-lg-6" style="max-height: 500px; width: auto;
-    height: auto;">
-		<img src=<%= '"https://image.tmdb.org/t/p/w500_and_h281_bestv2' + (data['profile_path'] || '') +'"' %> onerror="this.src='https://d3a8mw37cqal2z.cloudfront.net/assets/f996aa2014d2ffddfda8463c479898a3/images/no-poster-w185.jpg'" alt=<%='"'+ data['name'] + '"'%> title=<%='"' + data['name'] + '"'%> class="img-thumbnail img-responsive center-block" />
-	</div>	
-	<div class="col-lg-6">
-		<p><strong>Name: </strong> <%= data['name'] %></p>
+	height: auto;">
+	<img src=<%= '"' + (data.profile_picture || '') +'"' %> onerror="this.src='https://d3a8mw37cqal2z.cloudfront.net/assets/f996aa2014d2ffddfda8463c479898a3/images/no-poster-w185.jpg'" alt=<%='"'+ data.name + '"'%> title=<%='"' + data.name + '"'%> class="img-thumbnail img-responsive center-block" />
+</div>	
+<div class="col-lg-6">
+	<p><strong>Name: </strong> <%= data.name %></p>
 
-		<p><strong>Birthday: </strong> <%= data['birthday"'] %></p>
-		
-		<p><strong>Place of birth:</strong> <%= data['place_of_birth"'] %></p>
+	<p><strong>Birthday: </strong> <%= data.birthday %></p>
 
-	</div>
+	<p><strong>Place of birth:</strong> <%= data.place_of_birth %></p>
+
+</div>
 </div>
 
-	<div class="clearfix" style="margin-top:5px"></div>
-	
-	<div class="row" style="margin-top: 25px">
-		<h2><strong>Biography:</strong></h2>
-		<p><%= data['biography'] %></p>
-		<h3>Starred in: </h3>
-		<% count = 0 %>
-		<% starred_in['cast'][0..11].each do |movie| %>
-			<% if  count%6 ==0%>
-				<div class="row">
-			<% end %>
-					<a href=<%= '"http://localhost:8080/movie/' + movie['id'].to_s + '"' %> >
-						<div class="col-sm-2" > 
-							<img src=<%= '"https://image.tmdb.org/t/p/w185' + (movie['poster_path'] || '') +'"' %> onerror="this.src='https://d3a8mw37cqal2z.cloudfront.net/assets/f996aa2014d2ffddfda8463c479898a3/images/no-poster-w185.jpg'" alt=<%='"'+ movie['original_title'] + '"'%> title=<%='"' + movie['original_title'] + '"'%> class="img-thumbnail img-responsive center-block" />
-							<p class="text-center"><strong><%=movie['original_title'] %></strong></p>
-			 		</div>
-			 		</a>
+<div class="clearfix" style="margin-top:5px"></div>
 
-			<% if count%6==5 %>
-				</div>
-			<% end %>
-			<% count+=1 %>
-		<% end %>
-	</div>
+
+
+
 
 
 

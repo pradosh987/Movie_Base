@@ -4,6 +4,7 @@ load 'app/classes/Profile.rb'
 load 'app/classes/Movie.rb'
 load 'app/classes/Review.rb'
 load 'app/classes/Nav_Page.rb'
+require 'uri'
 
 
 class Remote_Api
@@ -13,7 +14,7 @@ class Remote_Api
 
 
 	def self.prepare_query(query,append ='')
-		return @@remote_api_end_point + query + '?api_key=' + @@api_key+ '&' + append
+		return URI.encode(@@remote_api_end_point + query + '?api_key=' + @@api_key+ '&' + append)
 	end
 
 	def self.call_api(params,apped_param ='', parse_func = nil)
@@ -31,21 +32,21 @@ class Remote_Api
 	def self.get_image_url(type, image)
 		case type
 		when 'x-small'
-			return 'https://image.tmdb.org/t/p/w92' + image.to_s
+			return URI.encode('https://image.tmdb.org/t/p/w92' + image.to_s)
 		when 'small'
-			return 'https://image.tmdb.org/t/p/w185' + image.to_s
+			return URI.encode('https://image.tmdb.org/t/p/w185' + image.to_s)
 		when 'medium'
-			return 'https://image.tmdb.org/t/p/w185' + image.to_s
+			return URI.encode('https://image.tmdb.org/t/p/w185' + image.to_s)
 		when 'large'
-			return 'https://image.tmdb.org/t/p/w780' + image.to_s
+			return URI.encode('https://image.tmdb.org/t/p/w780' + image.to_s)
 		when 'small-wide'
-			return 'https://image.tmdb.org/t/p/w185' + image.to_s
+			return URI.encode('https://image.tmdb.org/t/p/w185' + image.to_s)
 		when 'medium-wide'
-			return 'https://image.tmdb.org/t/p/w185' + image.to_s
+			return URI.encode('https://image.tmdb.org/t/p/w185' + image.to_s)
 		when 'large-wide'
-			return 'https://image.tmdb.org/t/p/w185' + image.to_s
+			return URI.encode('https://image.tmdb.org/t/p/w185' + image.to_s)
 		else
-			return 'https://d3a8mw37cqal2z.cloudfront.net/assets/f996aa2014d2ffddfda8463c479898a3/images/no-poster-w185.jpg'
+			return URI.encode('https://d3a8mw37cqal2z.cloudfront.net/assets/f996aa2014d2ffddfda8463c479898a3/images/no-poster-w185.jpg')
 		end
 	end
 
@@ -159,11 +160,24 @@ class Remote_Api
 	end
 
 	def self.get_movies_starred_by(id)
-		call_api('person/' + id.to_s + '/movie_credits')
+		raw_data = call_api('person/' + id.to_s + '/movie_credits')
+		puts raw_data.inspect 
+		movies = make_movie_list(raw_data)
+		return Nav_Page.new(movies,raw_data['page'],raw_data['total_pages'])
 	end
 
 	def self.get_profile(id)
-		call_api('person/' + id.to_s)
+	 raw_data = call_api('person/' + id.to_s)
+	 id = raw_data['id']
+	 name = raw_data['name']
+	 opts = Hash.new
+	 opts['place_of_birth'] = raw_data['place_of_birth']
+	 opts['biography'] = raw_data['biography']
+	 opts['profile_picture'] = get_image_url('medium-wide',raw_data['profile_path'])
+	 opts['homepage'] = raw_data['homepage']
+	 #opts['starred_in'] = get_movies_starred_by(id)
+	 pro = Profile.new(id,name,opts)
+	 return pro
 	end
 
 	def self.search(keyword, list=false)
