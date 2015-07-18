@@ -63,36 +63,35 @@ class Remote_Api
 		return movies
 	end
 
+	@@make_list_or_page = lambda do |raw_data,flag|
+		movies = make_movie_list(raw_data)
+		return movies if flag==true
+		return Nav_Page.new(movies,raw_data['page'],raw_data['total_pages'])
+	end
+
 	#Remote API endpoint methods
 	def self.get_now_playing_movies(list = false)
 		raw_data = call_api('movie/now_playing')
-		movies = make_movie_list(raw_data)
-		return movies if list==true
-		return Nav_Page.new(movies,raw_data['page'],raw_data['total_pages'])
+		@@make_list_or_page.call(raw_data,list)
 	end
 	
 	def self.get_upcoming_movies(list = false)
 		raw_data = call_api('movie/upcoming')
-		movies = make_movie_list(raw_data)
-		return movies if list==true
-		return Nav_Page.new(movies,raw_data['page'],raw_data['total_pages'])
+		@@make_list_or_page.call(raw_data,list)
 	end
 
 	def self.get_popular_movies(list = false)
-		return call_api('movie/popular') if list==true
 		raw_data = call_api('movie/popular')
-		return Nav_Page.new(make_movie_list(raw_data),raw_data['page'],raw_data['total_pages'])
+		@@make_list_or_page.call(raw_data,list)
 	end
 
-	def self.get_similar_movies(id, flag = false)
+	def self.get_similar_movies(id)
 	 	raw_data = call_api('movie/' + id.to_s + '/similar')
-	 	return raw_data if flag==true
 	 	return make_movie_list(raw_data)
 	end
 
-	def self.get_movie_details(id, flag = false)
+	def self.get_movie_details(id)
 		raw_data = call_api('movie/' + id.to_s)
-		return raw_data if flag==false
 		title = raw_data['original_title']
 		id = raw_data['id']
 
